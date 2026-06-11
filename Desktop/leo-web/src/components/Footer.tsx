@@ -43,7 +43,7 @@ export default function Footer() {
           </span>
         </div>
         <div className="flex gap-8 items-center">
-          ["Privacy","Terms","Contact"].map((label)=>{
+          {["Privacy","Terms","Contact"].map((label)=>{
   const hrefMap={
     Privacy:'/privacy',
     Terms:'/terms',
@@ -54,10 +54,10 @@ export default function Footer() {
       key={label}
       href={hrefMap}
       className="text-xs text-[#888888] hover:text-white transition-colors duration-300"
-      style={{fontFamily:"var(--font-inter)"}}
+      style={{fontFamily:"var(--font-inter)"}}}
     >{label}</a>
   );
-})
+})}
         </div>
       </div>
     </footer>
