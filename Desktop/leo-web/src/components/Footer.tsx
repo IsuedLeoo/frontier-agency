@@ -54,7 +54,7 @@ export default function Footer() {
       key={label}
       href={hrefMap}
       className="text-xs text-[#888888] hover:text-white transition-colors duration-300"
-      style={{fontFamily:"var(--font-inter)"}}}
+      style={{fontFamily:"var(--font-inter)"}}
     >{label}</a>
   );
 })}
