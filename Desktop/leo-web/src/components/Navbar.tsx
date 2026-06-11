@@ -11,9 +11,13 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+import { usePathname } from 'next/navigation';
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const isLegalPage = ['/privacy','/terms','/contact'].includes(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -39,7 +43,7 @@ export default function Navbar() {
         {navLinks.map((link) => (
           <li key={link.href}>
             <a
-              href={link.href}
+              href={isLegalPage && link.href.startsWith('#') ? `/${link.href}` : link.href}
               className="text-xs font-medium uppercase tracking-[0.04em] text-[#888888] hover:text-white transition-colors duration-300"
               style={{ fontFamily: "var(--font-inter)" }}
             >
@@ -98,7 +102,7 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
-                href={link.href}
+                href={isLegalPage && link.href.startsWith('#') ? `/${link.href}` : link.href}
                 onClick={() => setMobileOpen(false)}
                 className="text-lg font-medium uppercase tracking-[0.1em] text-[#888888] hover:text-white transition-colors duration-300"
                 style={{ fontFamily: "var(--font-inter)" }}
