@@ -522,7 +522,7 @@ export default function About() {
           </p>
         </div>
         <div className="relative w-full max-w-[480px] lg:max-w-none mx-auto">
-          <Image
+          <Image priority loading="eager"
             src="/image1.png"
             alt="Frontier Agency AI Operations"
             width={800}

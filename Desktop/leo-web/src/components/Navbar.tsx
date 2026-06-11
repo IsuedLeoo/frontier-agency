@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-0 flex justify-between items-center transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-0 flex justify-between items-center transition-all duration-300 bg-black/80 text-white ${
         scrolled ? "mix-blend-difference" : ""
       }`}
     >
