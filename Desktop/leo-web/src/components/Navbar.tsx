@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import PhoneLink from "./PhoneLink";
 
 const navLinks = [
   { href: "#services", label: "Services" },
@@ -54,12 +55,9 @@ export default function Navbar() {
         ))}
       </ul>
 
-      <a
-        href="tel:+17867439361"
+      <PhoneLink
         className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-xs font-medium uppercase tracking-[0.04em] text-white hover:text-[#C5A55A] transition-colors duration-300 cursor-pointer"
-      >
-        (786) 743-9361
-      </a>
+      />
 
       <a
         href="#pricing"

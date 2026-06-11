@@ -128,7 +128,7 @@ export default function Pricing() {
             </ul>
 
             <a
-              href="tel:+17867439361"
+              href="#pricing"
               className={`block w-full text-center px-8 py-4 text-xs font-semibold uppercase tracking-[0.04em] border transition-all duration-300 ${
                 tier.highlight
                   ? "bg-black text-white border-black hover:bg-transparent hover:text-black"
