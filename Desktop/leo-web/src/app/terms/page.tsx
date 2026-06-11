@@ -7,7 +7,13 @@ export default function Terms() {
   return (
     <>
       <Navbar />
-      <section className="max-w-4xl mx-auto py-12 px-6 mt-20" id="terms">
+      <section className="bg-gradient-to-r from-[#0a0a0a] to-[#1a1a1a] text-white py-20" id="terms-hero">
+        <div className="max-w-4xl mx-auto px-6">
+          <h1 className="text-4xl font-bold mb-4">Terms of Service</h1>
+          <p className="text-lg mb-8">Please read these terms carefully before using our services.</p>
+        </div>
+      </section>
+      <section className="max-w-4xl mx-auto py-12 px-6 mt-10 space-y-8" id="terms-content">
       <h1 className="text-3xl font-bold mb-8">Terms of Service</h1>
 
       <h2 className="text-2xl font-semibold mt-8 mb-4">1. Acceptance</h2>
