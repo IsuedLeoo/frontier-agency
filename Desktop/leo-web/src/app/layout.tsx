@@ -26,9 +26,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/logoblack.png",
-    shortcut: "/logoblack.png",
-    apple: "/logoblack.png",
+    icon: "/logoblack.png?v=2",
+    shortcut: "/logoblack.png?v=2",
+    apple: "/logoblack.png?v=2",
   },
 };
 
@@ -43,8 +43,8 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
       <head>
-        <link rel="icon" type="image/png" href="/logoblack.png" />
-        <link rel="shortcut icon" href="/logoblack.png" />
+        <link rel="icon" type="image/png" href="/logoblack.png?v=2" />
+        <link rel="shortcut icon" href="/logoblack.png?v=2" />
       </head>
       <body className="bg-black text-white antialiased">
         <AuthProvider>{children}</AuthProvider>
