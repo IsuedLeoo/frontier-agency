@@ -25,6 +25,11 @@ export const metadata: Metadata = {
       "Frontier Agency builds personalized AI agencies for businesses of every size. Custom AI operations on demand.",
     type: "website",
   },
+  icons: {
+    icon: "/logoblack.png",
+    shortcut: "/logoblack.png",
+    apple: "/logoblack.png",
+  },
 };
 
 export default function RootLayout({
