@@ -2,7 +2,7 @@
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center px-6 md:px-12 relative pt-16">
+    <section className="min-h-screen flex items-center px-6 md:px-12 relative pt-24">
       <div className="max-w-[1400px] mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-12">
         {/* Left: Text Content */}
         <div className="flex-1 text-center lg:text-left">

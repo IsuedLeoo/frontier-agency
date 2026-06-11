@@ -523,13 +523,11 @@ export default function About() {
         </div>
         <div className="relative w-full max-w-[480px] lg:max-w-none mx-auto">
           <Image priority loading="eager"
-            src="/image1.png"
+            src="/herobuilding.png"
             alt="Frontier Agency AI Operations"
             width={800}
             height={600}
-            className="w-full h-auto rounded-xl border border-[#1a1a1a] shadow-2xl shadow-black/50"
-            priority
-          />
+            className="w-full h-auto rounded-xl border border-[#1a1a1a] shadow-2xl shadow-black/50"          />
         </div>
       </div>
     </section>
