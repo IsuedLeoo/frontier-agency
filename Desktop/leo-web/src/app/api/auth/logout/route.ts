@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { cookies } from "next/headers";
 import { destroySession } from "@/lib/auth";
 
-export async function POST() {
+export async function POST(request: NextRequest) {
   try {
     await destroySession();
     return NextResponse.json(

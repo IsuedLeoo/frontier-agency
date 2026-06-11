@@ -1,4 +1,7 @@
-import crypto from "crypto";
+// Use Web Crypto API which works in both Node.js and Cloudflare Workers
+// We'll use subtle crypto operations for cryptographic functions
+const crypto = globalThis.crypto;
+const subtle = crypto.subtle;
 import { cookies } from "next/headers";
 import type { User, SafeUser } from "./types";
 
@@ -17,32 +20,109 @@ export function initDbQueries(db: any) {
 }
 
 export function generateId(): string {
-  return crypto.randomBytes(32).toString("hex");
+  // Generate 32 random bytes using Web Crypto API
+  const randomBytes = new Uint8Array(32);
+  crypto.getRandomValues(randomBytes);
+
+  // Convert to hex string
+  return Array.from(randomBytes)
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
 }
 
-// --- Password hashing with Node.js built-in scrypt ---
+// --- Password hashing with PBKDF2 (Web Crypto API compatible) ---
 
+async function hashPasswordPBKDF2(password: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+
+  // Import the password as raw key material
+  const passwordKey = await subtle.importKey(
+    "raw",
+    encoder.encode(password),
+    { name: "PBKDF2" },
+    false,
+    ["deriveKey"]
+  );
+
+  // Derive a 256-bit key using PBKDF2 with 100,000 iterations
+  const derivedKey = await subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt: salt,
+      iterations: 100000,
+      hash: "SHA-256"
+    },
+    passwordKey,
+    { name: "PBKDF2", length: 256 },
+    false,
+    ["deriveKey"]
+  );
+
+  // Export the derived key as raw bytes
+  const keyBuffer = await subtle.exportKey("raw", derivedKey);
+
+  // Return salt + hash as hex strings
+  const saltHex = Array.from(salt).map(b => b.toString(16).padStart(2, '0')).join('');
+  const keyHex = Array.from(new Uint8Array(keyBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+
+  return `${saltHex}:${keyHex}`;
+}
+
+async function verifyPasswordPBKDF2(password: string, hash: string): Promise<boolean> {
+  try {
+    const [saltHex, keyHex] = hash.split(":");
+    if (!saltHex || !keyHex) return false;
+
+    const salt = new Uint8Array(saltHex.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
+    const expectedKey = new Uint8Array(keyHex.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
+
+    const encoder = new TextEncoder();
+    const passwordKey = await subtle.importKey(
+      "raw",
+      encoder.encode(password),
+      { name: "PBKDF2" },
+      false,
+      ["deriveKey"]
+    );
+
+    const derivedKey = await subtle.deriveKey(
+      {
+        name: "PBKDF2",
+        salt: salt,
+        iterations: 100000,
+        hash: "SHA-256"
+      },
+      passwordKey,
+      { name: "PBKDF2", length: 256 },
+      false,
+      ["deriveKey"]
+    );
+
+    const keyBuffer = await subtle.exportKey("raw", derivedKey);
+    const actualKey = new Uint8Array(keyBuffer);
+
+    // Constant-time comparison to prevent timing attacks
+    if (expectedKey.length !== actualKey.length) return false;
+
+    let result = 0;
+    for (let i = 0; i < expectedKey.length; i++) {
+      result |= expectedKey[i] ^ actualKey[i];
+    }
+    return result === 0;
+  } catch (error) {
+    console.error("Password verification error:", error);
+    return false;
+  }
+}
+
+// Keep the original function names for compatibility
 export function hashPassword(password: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const salt = crypto.randomBytes(16).toString("hex");
-    crypto.scrypt(password, salt, 64, (err, derivedKey) => {
-      if (err) reject(err);
-      resolve(`${salt}:${derivedKey.toString("hex")}`);
-    });
-  });
+  return hashPasswordPBKDF2(password);
 }
 
-export function verifyPassword(
-  password: string,
-  hash: string
-): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    const [salt, key] = hash.split(":");
-    crypto.scrypt(password, salt, 64, (err, derivedKey) => {
-      if (err) reject(err);
-      resolve(crypto.timingSafeEqual(Buffer.from(key, "hex"), derivedKey));
-    });
-  });
+export function verifyPassword(password: string, hash: string): Promise<boolean> {
+  return verifyPasswordPBKDF2(password, hash);
 }
 
 // --- Session management ---

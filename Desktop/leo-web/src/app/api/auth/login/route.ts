@@ -80,5 +80,14 @@ async function createSession(userId: string, sessionQueries: any): Promise<strin
     .bind(sessionId, userId, expiresAt)
     .run();
 
+  const cookieStore = await cookies();
+  cookieStore.set("frontier_session", sessionId, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 30 * 24 * 60 * 60, // 30 days in seconds
+  });
+
   return sessionId;
 }
