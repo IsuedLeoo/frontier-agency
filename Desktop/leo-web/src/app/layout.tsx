@@ -43,7 +43,8 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
       <head>
-        <link rel="icon" href="/logoblack.png" />
+        <link rel="icon" type="image/png" href="/logoblack.png" />
+        <link rel="shortcut icon" href="/logoblack.png" />
       </head>
       <body className="bg-black text-white antialiased">
         <AuthProvider>{children}</AuthProvider>
