@@ -1,0 +1,24 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"main": ".open-next/worker.js",
+	"name": "frontier-agency",
+	"compatibility_date": "2026-06-11",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"workers_dev": true,
+	"services": [
+		{
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "frontier-agency"
+		}
+	],
+	"images": {
+		"binding": "IMAGES"
+	}
+}
