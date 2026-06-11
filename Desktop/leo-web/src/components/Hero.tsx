@@ -1,7 +1,5 @@
 "use client";
 
-import PhoneLink from "./PhoneLink";
-
 export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col justify-center items-center px-6 md:px-12 text-center relative">
@@ -46,10 +44,12 @@ export default function Hero() {
         >
           Start a Project
         </a>
-        <PhoneLink
-          display="Call (786) 743-9361"
+        <a
+          href="tel:+17867439361"
           className="w-full sm:w-auto text-center px-8 py-4 bg-transparent text-white text-xs font-medium uppercase tracking-[0.04em] border border-[#333333] hover:border-white transition-all duration-300"
-        />
+        >
+          Call (786) 743-9361
+        </a>
       </div>
 
       <div className="reveal absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">

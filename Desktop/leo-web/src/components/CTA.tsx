@@ -1,7 +1,5 @@
 "use client";
 
-import PhoneLink from "./PhoneLink";
-
 export default function CTA() {
   return (
     <section className="py-12 sm:py-16 md:py-24 lg:py-40 px-6 md:px-12 text-center">
@@ -26,11 +24,13 @@ export default function CTA() {
         >
           Schedule a Call
         </a>
-        <PhoneLink
+        <a
+          href="tel:+17867439361"
           className="inline-flex items-center gap-2 text-sm font-medium text-[#888888] hover:text-white transition-colors duration-300"
-          icon={<span className="text-[#C5A55A]">☎</span>}
           style={{ fontFamily: "var(--font-inter)" }}
-        />
+        >
+          <span className="text-[#C5A55A]">☎</span> (786) 743-9361
+        </a>
       </div>
     </section>
   );

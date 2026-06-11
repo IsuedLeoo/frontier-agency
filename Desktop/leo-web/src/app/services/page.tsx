@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { allServices, slugify } from "./data";
 import { DepartmentIcon } from "./icons";
-import PhoneLink from "@/components/PhoneLink";
 
 export default function ServicesPage() {
   const [search, setSearch] = useState("");
@@ -213,11 +212,13 @@ export default function ServicesPage() {
           >
             Schedule a Call
           </Link>
-          <PhoneLink
+          <a
+            href="tel:+17867439361"
             className="inline-flex items-center gap-2 text-sm font-medium text-[#888888] hover:text-white transition-colors duration-300"
-            icon={<span className="text-[#C5A55A]">☎</span>}
             style={{ fontFamily: "var(--font-inter)" }}
-          />
+          >
+            <span className="text-[#C5A55A]">☎</span> (786) 743-9361
+          </a>
         </div>
       </section>
 
@@ -228,10 +229,13 @@ export default function ServicesPage() {
             <span className="text-xs text-[#888888]" style={{ fontFamily: "var(--font-inter)" }}>
               &copy; 2026 Frontier Agency. All rights reserved.
             </span>
-            <PhoneLink
+            <a
+              href="tel:+17867439361"
               className="text-xs text-[#888888] hover:text-white transition-colors duration-300"
               style={{ fontFamily: "var(--font-inter)" }}
-            />
+            >
+              (786) 743-9361
+            </a>
           </div>
           <div className="flex items-center gap-2 text-[0.65rem] sm:text-xs text-[#888888] tracking-[0.1em] uppercase" style={{ fontFamily: "var(--font-inter)" }}>
             <span className="text-[#555555]">A</span>
