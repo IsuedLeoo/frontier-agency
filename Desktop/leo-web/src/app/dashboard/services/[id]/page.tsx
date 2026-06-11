@@ -201,9 +201,9 @@ export default async function DashboardServiceDetailPage({
             <div className="flex items-center gap-3">
               <CheckCircle
                 size={16}
-                className=`text-[#10b981] ${
+                className={`text-[#10b981] ${
                   service.progress === 100 ? "" : "text-[#666666]"
-                }`
+                }`}
               />
               <div>
                 <p className="text-sm font-semibold text-white">

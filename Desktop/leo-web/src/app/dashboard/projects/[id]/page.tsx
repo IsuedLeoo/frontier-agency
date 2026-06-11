@@ -339,7 +339,7 @@ export default async function DashboardProjectDetailPage({
                       className="block text-xs text-[#CCCCCC]"
                     >
                       • {service}
-                    </>
+                    </span>
                   ))}
                 </div>
               </div>

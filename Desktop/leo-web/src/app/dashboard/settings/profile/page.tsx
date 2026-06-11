@@ -119,7 +119,7 @@ export default async function DashboardSettingsProfilePage() {
                 className="w-full px-4 py-2 bg-[#222222] border border-[#333333] rounded-sm text-white placeholder-[#666666] focus:outline-none focus:border-[#C5A55A]"
                 style={{ fontFamily: "var(--font-inter)" }}
                 readOnly
-              /><!-- Email should be read-only or require verification to change -->
+              />
 
               {/* Phone */}
               <label

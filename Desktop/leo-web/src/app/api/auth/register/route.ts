@@ -91,27 +91,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
-// Helper to create session (extracted for clarity)
-async function createSession(userId: string, sessionQueries: any): Promise<string> {
-  const crypto = await import("crypto");
-  const sessionId = crypto.randomBytes(32).toString("hex");
-  const expiresAt = new Date(
-    Date.now() + 30 * 24 * 60 * 60 * 1000 // 30 days
-  ).toISOString();
-
-  await sessionQueries.create
-    .bind(sessionId, userId, expiresAt)
-    .run();
-
-  const cookieStore = await cookies();
-  cookieStore.set("frontier_session", sessionId, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: 30 * 24 * 60 * 60, // 30 days in seconds
-  });
-
-  return sessionId;
-}
