@@ -8,6 +8,7 @@ const navLinks = [
   { href: "#process", label: "Process" },
   { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -56,7 +57,7 @@ export default function Navbar() {
       </a>
 
       <a
-        href="#pricing"
+        href="/contact"
         className="hidden sm:inline-flex items-center px-5 py-2.5 text-xs font-medium uppercase tracking-[0.04em] text-white border border-white bg-transparent hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
       >
         Contact
@@ -108,7 +109,7 @@ export default function Navbar() {
           ))}
         </ul>
         <a
-          href="#pricing"
+          href="/contact"
           onClick={() => setMobileOpen(false)}
           className="mt-4 inline-flex items-center px-8 py-4 text-sm font-medium uppercase tracking-[0.04em] text-white border border-white bg-transparent hover:bg-white hover:text-black transition-all duration-300"
         >
