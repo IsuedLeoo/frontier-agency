@@ -7,7 +7,7 @@ export default function Privacy() {
   return (
     <>
       <Navbar />
-      <section className="max-w-4xl mx-auto py-12 px-6" id="privacy">
+      <section className="max-w-4xl mx-auto py-12 px-6 mt-20" id="privacy">
       <h1 className="text-3xl font-bold mb-8">Privacy Policy</h1>
       <p className="mb-6">
         Frontier Agency (“Company”, “we”, “us”, or “our”) respects your privacy and is committed to protecting the personal data you share with us. This Privacy Policy ("Policy") explains how we collect, use, store, disclose, and protect your information when you use our website, services, and applications (collectively the "Service").

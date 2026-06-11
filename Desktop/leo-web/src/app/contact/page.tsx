@@ -7,7 +7,7 @@ export default function Contact() {
   return (
     <>
       <Navbar />
-      <section className="max-w-4xl mx-auto py-12 px-6" id="contact">
+      <section className="max-w-4xl mx-auto py-12 px-6 mt-20" id="contact">
       <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
 
       <p className="mb-6">

@@ -7,7 +7,7 @@ export default function Terms() {
   return (
     <>
       <Navbar />
-      <section className="max-w-4xl mx-auto py-12 px-6" id="terms">
+      <section className="max-w-4xl mx-auto py-12 px-6 mt-20" id="terms">
       <h1 className="text-3xl font-bold mb-8">Terms of Service</h1>
 
       <h2 className="text-2xl font-semibold mt-8 mb-4">1. Acceptance</h2>
