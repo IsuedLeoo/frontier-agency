@@ -1,8 +1,13 @@
 "use client";
 
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+
 export default function Contact() {
   return (
-    <section className="max-w-4xl mx-auto py-12 px-6" id="contact">
+    <>
+      <Navbar />
+      <section className="max-w-4xl mx-auto py-12 px-6" id="contact">
       <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
 
       <p className="mb-6">
@@ -82,5 +87,7 @@ export default function Contact() {
         </form>
       </div>
     </section>
+      <Footer />
+    </>
   );
 }

@@ -1,8 +1,13 @@
 "use client";
 
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+
 export default function Terms() {
   return (
-    <section className="max-w-4xl mx-auto py-12 px-6" id="terms">
+    <>
+      <Navbar />
+      <section className="max-w-4xl mx-auto py-12 px-6" id="terms">
       <h1 className="text-3xl font-bold mb-8">Terms of Service</h1>
 
       <h2 className="text-2xl font-semibold mt-8 mb-4">1. Acceptance</h2>
@@ -49,7 +54,7 @@ export default function Terms() {
       <h2 className="text-2xl font-semibold mt-8 mb-4">7. User‑Generated Content</h2>
       <ul className="list-disc pl-6 space-y-2">
         <li>You are solely responsible for the legality and accuracy of your Content.</li>
-        <li>We may remove or disable Content that violates these Terms or any law.
+        <li>We may remove or disable Content that violates these Terms or any law.</li>
         <li>We reserve the right, without notice, to terminate or suspend any Account that repeatedly breaches this provision.</li>
       </ul>
 
@@ -88,5 +93,7 @@ export default function Terms() {
         For any questions concerning these Terms, please contact us at <a href="mailto:support@frontieragency.com" className="text-blue-400 underline">support@frontieragency.com</a>.
       </p>
     </section>
+      <Footer />
+    </>
   );
 }
