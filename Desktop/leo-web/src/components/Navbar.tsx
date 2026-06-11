@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Logo from "@/components/Logo";
 
 const navLinks = [
   { href: "#services", label: "Services" },
@@ -27,16 +28,12 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-5 flex justify-between items-center transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-0 flex justify-between items-center transition-all duration-300 ${
         scrolled ? "mix-blend-difference" : ""
       }`}
     >
-      <a
-        href="#"
-        className="text-base font-bold tracking-tight text-white relative z-50"
-        style={{ fontFamily: "var(--font-space-grotesk)" }}
-      >
-        Frontier Agency
+      <a href="#" className="relative z-50 block">
+        <Logo variant="dark" />
       </a>
 
       {/* Desktop nav */}

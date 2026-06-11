@@ -5,6 +5,7 @@ import { ArrowRight, Check, Zap, Clock, TrendingUp, Users, Shield, ChevronRight 
 import { getService, getAllServicePaths, allServices } from "../../data";
 import type { ServiceCategory, ServiceItem, ServiceDocumentation } from "../../data";
 import { DepartmentIcon } from "../../icons";
+import Logo from "@/components/Logo";
 
 interface Props {
   params: Promise<{ department: string; service: string }>;
@@ -311,12 +312,8 @@ export default async function ServicePage({ params }: Props) {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-black/90 backdrop-blur-sm border-b border-[#333333]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-base font-bold tracking-tight text-white hover:text-[#888888] transition-colors duration-300"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            Frontier Agency
+          <Link href="/" className="block">
+            <Logo variant="dark" />
           </Link>
           <Link
             href="/services"

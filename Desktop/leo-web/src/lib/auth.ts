@@ -1,10 +1,20 @@
 import crypto from "crypto";
 import { cookies } from "next/headers";
-import { userQueries, sessionQueries } from "./db";
 import type { User, SafeUser } from "./types";
 
 const SESSION_DURATION_DAYS = 30;
 const COOKIE_NAME = "frontier_session";
+
+// These will be initialized by the caller with the actual database queries
+let userQueries: ReturnType<typeof import("./db")["getDatabaseQueries"]>["userQueries"] | null = null;
+let sessionQueries: ReturnType<typeof import("./db")["getDatabaseQueries"]>["sessionQueries"] | null = null;
+
+// Initialize the database queries - this should be called once per request
+export function initDbQueries(db: any) {
+  const { userQueries: uq, sessionQueries: sq } = db;
+  userQueries = uq;
+  sessionQueries = sq;
+}
 
 export function generateId(): string {
   return crypto.randomBytes(32).toString("hex");
@@ -38,12 +48,17 @@ export function verifyPassword(
 // --- Session management ---
 
 export async function createSession(userId: string): Promise<string> {
+  if (!sessionQueries) throw new Error("Database queries not initialized");
+
   const sessionId = generateId();
   const expiresAt = new Date(
     Date.now() + SESSION_DURATION_DAYS * 24 * 60 * 60 * 1000
   ).toISOString();
 
-  sessionQueries.create.run(sessionId, userId, expiresAt);
+  // D1 prepared statements need to be bound and executed
+  const result = await sessionQueries.create
+    .bind(sessionId, userId, expiresAt)
+    .run();
 
   const cookieStore = await cookies();
   cookieStore.set(COOKIE_NAME, sessionId, {
@@ -58,33 +73,38 @@ export async function createSession(userId: string): Promise<string> {
 }
 
 export async function getSession(): Promise<{ user: SafeUser } | null> {
+  if (!sessionQueries || !userQueries) throw new Error("Database queries not initialized");
+
   const cookieStore = await cookies();
   const sessionId = cookieStore.get(COOKIE_NAME)?.value;
 
   if (!sessionId) return null;
 
-  sessionQueries.deleteExpired.run();
+  // Delete expired sessions first
+  await sessionQueries.deleteExpired.run();
 
-  const session = sessionQueries.findById.get(sessionId) as
-    | { user_id: string }
-    | undefined;
+  // Find the session
+  const sessionResult = await sessionQueries.findById.bind(sessionId).first();
 
-  if (!session) return null;
+  if (!sessionResult) return null;
 
-  const user = userQueries.findById.get(session.user_id) as User | undefined;
+  // Find the user
+  const userResult = await userQueries.findById.bind(sessionResult.user_id).first();
 
-  if (!user) return null;
+  if (!userResult) return null;
 
-  const { password_hash: _, ...safeUser } = user;
+  const { password_hash: _, ...safeUser } = userResult as User;
   return { user: safeUser };
 }
 
 export async function destroySession(): Promise<void> {
+  if (!sessionQueries) throw new Error("Database queries not initialized");
+
   const cookieStore = await cookies();
   const sessionId = cookieStore.get(COOKIE_NAME)?.value;
 
   if (sessionId) {
-    sessionQueries.deleteById.run(sessionId);
+    await sessionQueries.deleteById.bind(sessionId).run();
   }
 
   cookieStore.delete(COOKIE_NAME);

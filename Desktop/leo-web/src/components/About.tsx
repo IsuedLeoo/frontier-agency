@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Activity,
@@ -520,7 +521,16 @@ export default function About() {
             and operates as a seamless extension of your organization.
           </p>
         </div>
-        <AgentDashboard />
+        <div className="relative w-full max-w-[480px] lg:max-w-none mx-auto">
+          <Image
+            src="/image1.png"
+            alt="Frontier Agency AI Operations"
+            width={800}
+            height={600}
+            className="w-full h-auto rounded-xl border border-[#1a1a1a] shadow-2xl shadow-black/50"
+            priority
+          />
+        </div>
       </div>
     </section>
   );

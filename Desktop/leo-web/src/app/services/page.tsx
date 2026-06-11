@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { allServices, slugify } from "./data";
 import { DepartmentIcon } from "./icons";
+import Logo from "@/components/Logo";
 
 export default function ServicesPage() {
   const [search, setSearch] = useState("");
@@ -43,12 +44,8 @@ export default function ServicesPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-black/90 backdrop-blur-sm border-b border-[#333333]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-base font-bold tracking-tight text-white hover:text-[#888888] transition-colors duration-300"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            Frontier Agency
+          <Link href="/" className="block">
+            <Logo variant="dark" />
           </Link>
           <Link
             href="/"

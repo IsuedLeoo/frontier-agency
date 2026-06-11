@@ -7,7 +7,7 @@ import {
   validateName,
   generateId,
 } from "@/lib/auth";
-import { userQueries } from "@/lib/db";
+import type { D1Database } from "@cloudflare/workers-types";
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,7 +31,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: passwordError }, { status: 400 });
     }
 
-    const existingUser = userQueries.findByEmail.get(email.toLowerCase());
+    // Get database binding from Cloudflare environment
+    // @ts-ignore - D1 binding available in Cloudflare Workers
+    const dbBinding = process.env.frontier_agency_db as unknown as D1Database;
+
+    // Import the D1 database adapter
+    const { getDatabaseQueries } = await import("@/lib/db");
+    const { userQueries, sessionQueries } = getDatabaseQueries(dbBinding);
+
+    // Check if user already exists
+    const existingUser = await userQueries.findByEmail
+      .bind(email.toLowerCase())
+      .first();
+
     if (existingUser) {
       return NextResponse.json(
         { error: "An account with this email already exists" },
@@ -39,19 +51,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Create new user
     const passwordHash = await hashPassword(password);
     const userId = generateId();
     const createdAt = new Date().toISOString();
 
-    userQueries.create.run(
-      userId,
-      email.toLowerCase().trim(),
-      passwordHash,
-      name.trim(),
-      createdAt
-    );
+    await userQueries.create
+      .bind(
+        userId,
+        email.toLowerCase().trim(),
+        passwordHash,
+        name.trim(),
+        createdAt
+      )
+      .run();
 
-    await createSession(userId);
+    // Create session
+    await createSession(userId, sessionQueries);
 
     return NextResponse.json(
       { success: true, redirect: "/dashboard" },
@@ -64,4 +80,19 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+// Helper to create session (extracted for clarity)
+async function createSession(userId: string, sessionQueries: any): Promise<string> {
+  const crypto = await import("crypto");
+  const sessionId = crypto.randomBytes(32).toString("hex");
+  const expiresAt = new Date(
+    Date.now() + 30 * 24 * 60 * 60 * 1000 // 30 days
+  ).toISOString();
+
+  await sessionQueries.create
+    .bind(sessionId, userId, expiresAt)
+    .run();
+
+  return sessionId;
 }

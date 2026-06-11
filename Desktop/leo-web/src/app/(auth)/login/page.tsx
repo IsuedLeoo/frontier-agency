@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
+import Logo from "@/components/Logo";
 
 function LoginForm() {
   const router = useRouter();
@@ -124,12 +125,8 @@ export default function LoginPage() {
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
-          <Link
-            href="/"
-            className="text-2xl font-bold tracking-tight"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            Frontier Agency
+          <Link href="/" className="inline-block">
+            <Logo variant="dark" />
           </Link>
           <p
             className="text-sm text-[#888888] mt-2"

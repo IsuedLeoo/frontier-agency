@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { LayoutDashboard, Settings, LogOut } from "lucide-react";
 import LogoutButton from "./logout-button";
+import Logo from "@/components/Logo";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
@@ -37,12 +38,8 @@ export default async function DashboardLayout({
       <aside className="fixed top-0 left-0 bottom-0 w-64 bg-black border-r border-[#333333] z-50 flex flex-col">
         {/* Logo */}
         <div className="px-6 py-6 border-b border-[#333333]">
-          <Link
-            href="/dashboard"
-            className="text-base font-bold tracking-tight text-white"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            Frontier Agency
+          <Link href="/dashboard" className="block">
+            <Logo variant="dark" />
           </Link>
         </div>
 

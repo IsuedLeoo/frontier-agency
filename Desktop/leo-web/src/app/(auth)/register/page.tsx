@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Mail, Lock, User, ArrowRight } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
+import Logo from "@/components/Logo";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -37,12 +38,8 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
-          <Link
-            href="/"
-            className="text-2xl font-bold tracking-tight"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            Frontier Agency
+          <Link href="/" className="inline-block">
+            <Logo variant="dark" />
           </Link>
           <p
             className="text-sm text-[#888888] mt-2"

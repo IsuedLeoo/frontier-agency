@@ -1,8 +1,18 @@
 import { NextResponse } from "next/server";
-import { getSession } from "@/lib/auth";
+import { getSession, initDbQueries } from "@/lib/auth";
+import type { D1Database } from "@cloudflare/workers-types";
 
 export async function GET() {
   try {
+    // Get database binding from Cloudflare environment
+    // @ts-ignore - D1 binding available in Cloudflare Workers
+    const dbBinding = process.env.frontier_agency_db as unknown as D1Database;
+
+    // Import and initialize DB queries
+    const { getDatabaseQueries } = await import("@/lib/db");
+    const { userQueries, sessionQueries } = getDatabaseQueries(dbBinding);
+    initDbQueries({ userQueries, sessionQueries });
+
     const session = await getSession();
 
     if (!session) {

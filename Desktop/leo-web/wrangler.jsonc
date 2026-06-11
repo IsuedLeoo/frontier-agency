@@ -19,5 +19,12 @@
 	],
 	"images": {
 		"binding": "IMAGES"
-	}
+	},
+	"d1_databases": [
+		{
+			"binding": "frontier_agency_db",
+			"database_name": "frontier-agency-db",
+			"database_id": "dbbe76c6-a0e4-4191-8f91-af9db5082f10"
+		}
+	]
 }

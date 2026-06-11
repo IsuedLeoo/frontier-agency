@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  verifyPassword,
-  createSession,
-  validateEmail,
-} from "@/lib/auth";
-import { userQueries } from "@/lib/db";
+import { verifyPassword, createSession, validateEmail } from "@/lib/auth";
+import type { D1Database } from "@cloudflare/workers-types";
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,28 +21,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const user = userQueries.findByEmail.get(email.toLowerCase()) as
-      | { id: string; password_hash: string }
-      | undefined;
+    // Get database binding from Cloudflare environment
+    // @ts-ignore - D1 binding available in Cloudflare Workers
+    const dbBinding = process.env.frontier_agency_db as unknown as D1Database;
 
-    if (!user) {
+    // Import the D1 database adapter
+    const { getDatabaseQueries } = await import("@/lib/db");
+    const { userQueries, sessionQueries } = getDatabaseQueries(dbBinding);
+
+    // Find user by email
+    const userResult = await userQueries.findByEmail
+      .bind(email.toLowerCase())
+      .first();
+
+    if (!userResult) {
       return NextResponse.json(
         { error: "Invalid email or password" },
         { status: 401 }
       );
     }
 
-    let isValid: boolean;
-    try {
-      isValid = await verifyPassword(password, user.password_hash);
-    } catch (err) {
-      console.error("Password verification error:", err);
-      return NextResponse.json(
-        { error: "An error occurred. Please try again." },
-        { status: 500 }
-      );
-    }
+    const user = userResult as { id: string; password_hash: string };
 
+    // Verify password
+    const isValid = await verifyPassword(password, user.password_hash);
     if (!isValid) {
       return NextResponse.json(
         { error: "Invalid email or password" },
@@ -54,7 +52,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await createSession(user.id);
+    // Create session
+    await createSession(user.id, sessionQueries);
 
     return NextResponse.json(
       { success: true, redirect: "/dashboard" },
@@ -67,4 +66,19 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+// Helper to create session (extracted for clarity)
+async function createSession(userId: string, sessionQueries: any): Promise<string> {
+  const crypto = await import("crypto");
+  const sessionId = crypto.randomBytes(32).toString("hex");
+  const expiresAt = new Date(
+    Date.now() + 30 * 24 * 60 * 60 * 1000 // 30 days
+  ).toISOString();
+
+  await sessionQueries.create
+    .bind(sessionId, userId, expiresAt)
+    .run();
+
+  return sessionId;
 }
