@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
       .run();
 
     // Create session and set cookie
-    const { sessionId, expiresAt } = await createSession(userId, sessionQueries);
+    const { sessionId, expiresAt } = await createSession(userId);
 
     // Set cookie via response headers
     const cookieStore = await cookies();

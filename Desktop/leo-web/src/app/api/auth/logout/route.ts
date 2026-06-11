@@ -5,7 +5,7 @@ import { destroySession } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
-    await destroySession(request.headers);
+    await destroySession();
 
     // Clear the cookie
     const cookieStore = await cookies();

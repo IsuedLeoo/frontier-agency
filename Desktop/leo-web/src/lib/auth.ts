@@ -127,7 +127,7 @@ export function verifyPassword(password: string, hash: string): Promise<boolean>
 
 // --- Session management ---
 
-export async function createSession(userId: string, requestHeaders?: Headers): Promise<string> {
+export async function createSession(userId: string): Promise<{ sessionId: string; expiresAt: string }> {
   if (!sessionQueries) throw new Error("Database queries not initialized");
 
   const sessionId = generateId();
@@ -140,7 +140,7 @@ export async function createSession(userId: string, requestHeaders?: Headers): P
     .bind(sessionId, userId, expiresAt)
     .run();
 
-  // Set cookie via response headers (will be handled by caller)
+  // Return session data for caller to handle cookie setting
   return { sessionId, expiresAt };
 }
 
@@ -157,7 +157,7 @@ export async function getSession(requestHeaders: Headers): Promise<{ user: SafeU
   if (!sessionId) return null;
 
   // Delete expired sessions first
-  await sessionQueries.deleteExpired.run();
+  await sessionQueries.deleteExpired.bind().run();
 
   // Find the session
   const sessionResult = await sessionQueries.findById.bind(sessionId).first();
@@ -173,11 +173,10 @@ export async function getSession(requestHeaders: Headers): Promise<{ user: SafeU
   return { user: safeUser };
 }
 
-export async function destroySession(requestHeaders?: Headers): Promise<void> {
+export async function destroySession(): Promise<void> {
   if (!sessionQueries) throw new Error("Database queries not initialized");
 
-  // Clear cookie via response headers (will be handled by caller)
-  // In practice, the caller should handle clearing the cookie
+  // Note: Cookie clearing should be handled by the caller in the API route
 }
 
 // --- Input validation ---
