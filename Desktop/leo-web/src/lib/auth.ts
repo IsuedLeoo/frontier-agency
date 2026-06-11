@@ -127,7 +127,7 @@ export function verifyPassword(password: string, hash: string): Promise<boolean>
 
 // --- Session management ---
 
-export async function createSession(userId: string): Promise<string> {
+export async function createSession(userId: string, requestHeaders?: Headers): Promise<string> {
   if (!sessionQueries) throw new Error("Database queries not initialized");
 
   const sessionId = generateId();
@@ -140,23 +140,19 @@ export async function createSession(userId: string): Promise<string> {
     .bind(sessionId, userId, expiresAt)
     .run();
 
-  const cookieStore = await cookies();
-  cookieStore.set(COOKIE_NAME, sessionId, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: SESSION_DURATION_DAYS * 24 * 60 * 60,
-  });
-
-  return sessionId;
+  // Set cookie via response headers (will be handled by caller)
+  return { sessionId, expiresAt };
 }
 
-export async function getSession(): Promise<{ user: SafeUser } | null> {
+export async function getSession(requestHeaders: Headers): Promise<{ user: SafeUser } | null> {
   if (!sessionQueries || !userQueries) throw new Error("Database queries not initialized");
 
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get(COOKIE_NAME)?.value;
+  // Get session ID from cookie header
+  const cookieHeader = requestHeaders.get("cookie") || "";
+  const sessionIdMatch = cookieHeader.match(
+    new RegExp(`(?:^|; )${COOKIE_NAME}=([^;]*)`)
+  );
+  const sessionId = sessionIdMatch ? decodeURIComponent(sessionIdMatch[1]) : null;
 
   if (!sessionId) return null;
 
@@ -177,17 +173,11 @@ export async function getSession(): Promise<{ user: SafeUser } | null> {
   return { user: safeUser };
 }
 
-export async function destroySession(): Promise<void> {
+export async function destroySession(requestHeaders?: Headers): Promise<void> {
   if (!sessionQueries) throw new Error("Database queries not initialized");
 
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get(COOKIE_NAME)?.value;
-
-  if (sessionId) {
-    await sessionQueries.deleteById.bind(sessionId).run();
-  }
-
-  cookieStore.delete(COOKIE_NAME);
+  // Clear cookie via response headers (will be handled by caller)
+  // In practice, the caller should handle clearing the cookie
 }
 
 // --- Input validation ---

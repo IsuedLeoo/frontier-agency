@@ -52,8 +52,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create session
-    await createSession(user.id, sessionQueries);
+    // Create session and set cookie
+    const { sessionId, expiresAt } = await createSession(user.id, sessionQueries);
+
+    // Set cookie via response headers
+    const cookieStore = await cookies();
+    cookieStore.set("frontier_session", sessionId, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 30 * 24 * 60 * 60, // 30 days in seconds
+    });
 
     return NextResponse.json(
       { success: true, redirect: "/dashboard" },

@@ -5,7 +5,12 @@ import { destroySession } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
-    await destroySession();
+    await destroySession(request.headers);
+
+    // Clear the cookie
+    const cookieStore = await cookies();
+    cookieStore.delete("frontier_session");
+
     return NextResponse.json(
       { success: true, redirect: "/login" },
       { status: 200 }
