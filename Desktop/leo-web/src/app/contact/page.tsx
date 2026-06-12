@@ -7,13 +7,7 @@ export default function Contact() {
   return (
     <>
       <Navbar />
-      <section className="bg-gradient-to-r from-[#0a0a0a] to-[#1a1a1a] text-white py-20" id="contact-hero">
-        <div className="max-w-4xl mx-auto px-6">
-          <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-          <p className="text-lg mb-8">We’re here to help. Reach out using any method below or send us a message.</p>
-        </div>
-      </section>
-      <section className="max-w-4xl mx-auto py-12 px-6 mt-10 space-y-8" id="contact-content">
+      <section className="max-w-4xl mx-auto py-12 px-6 mt-20" id="contact">
       <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
 
       <p className="mb-6">
@@ -41,7 +35,7 @@ export default function Contact() {
           </a>
         </li>
         <li>
-          <strong>Mailing Address:</strong>{' '}123 Innovation Drive, Miami, FL 33101, USA
+          <strong>Mailing Address:</strong>{' '}Virtual Production (online only)
         </li>
         <li>
           <strong>Social Media:</strong>{' '}
