@@ -8,7 +8,7 @@ export default function Footer() {
           <span className="relative group">
             <a href="https://gstudios.co" target="_blank" rel="noopener noreferrer" className="font-semibold text-white tracking-wide hover:text-[#C5A55A] transition-colors duration-300 cursor-pointer">gStudios</a>
             <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-3 py-1.5 bg-[#1a1a1a] border border-[#333333] rounded text-[0.65rem] sm:text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ fontFamily: "var(--font-inter)" }}>
-              <span className="text-[#C5A55A]">Gladyshev</span><span className="text-white"> Studios</span>
+              <span className="text-[#C5A55A]">Golden</span><span className="text-white"> Studios</span>
             </span>
           </span>
           <span className="text-[#555555]">company</span>
