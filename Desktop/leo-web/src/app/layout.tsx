@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Head from "next/head";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
@@ -43,10 +42,6 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
-      <Head>
-        <link rel="icon" type="image/png" href="/logoblack.png" />
-        <link rel="shortcut icon" href="/logoblack.png" />
-      </Head>
       <body className="bg-black text-white antialiased">
         <AuthProvider>{children}</AuthProvider>
       </body>
