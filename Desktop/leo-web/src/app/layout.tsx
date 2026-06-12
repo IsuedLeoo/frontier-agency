@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Head from "next/head";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
@@ -26,9 +27,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/logoblack.png?v=2",
-    shortcut: "/logoblack.png?v=2",
-    apple: "/logoblack.png?v=2",
+    icon: "/logoblack.png",
+    shortcut: "/logoblack.png",
+    apple: "/logoblack.png",
   },
 };
 
@@ -42,10 +43,10 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
-      <head>
-        <link rel="icon" type="image/png" href="/logoblack.png?v=2" />
-        <link rel="shortcut icon" href="/logoblack.png?v=2" />
-      </head>
+      <Head>
+        <link rel="icon" type="image/png" href="/logoblack.png" />
+        <link rel="shortcut icon" href="/logoblack.png" />
+      </Head>
       <body className="bg-black text-white antialiased">
         <AuthProvider>{children}</AuthProvider>
       </body>
