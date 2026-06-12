@@ -1,0 +1,30 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "frontier-agency-proxy",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2026-06-11",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"services": [
+		{
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "frontier-agency-proxy"
+		}
+	],
+	"images": {
+		"binding": "IMAGES"
+	},
+	"d1_databases": [
+		{
+			"binding": "frontier_agency_db",
+			"database_name": "frontier-agency-db",
+			"database_id": "dbbe76c6-a0e4-4191-8f91-af9db5082f10"
+		}
+	]
+}
