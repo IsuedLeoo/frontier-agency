@@ -6,6 +6,8 @@ interface LogoProps {
   width?: number;
 }
 
+import Link from "next/link";
+
 export default function Logo({
   variant,
   className = "",
@@ -14,13 +16,15 @@ export default function Logo({
   const src = variant === "dark" ? "/logowhite.png" : "/logoblack.png";
 
   return (
-    <Image
-      src={src}
-      alt="Frontier Agency"
-      width={width}
-      height={width * (1024 / 1536)}
-      className={`h-auto object-contain ${className}`}
-      priority
-    />
+    <Link href="/" prefetch={false}>
+      <Image
+        src={src}
+        alt="Frontier Agency"
+        width={width}
+        height={width * (1024 / 1536)}
+        className={`h-auto object-contain ${className}`}
+        priority
+      />
+    </Link>
   );
 }
