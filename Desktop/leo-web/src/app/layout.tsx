@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
+    // fallback favicon
+    // Note: the actual link tag is added below to guarantee loading
+
     icon: [{ url: "/logoblack.png", sizes: "any" }],
     shortcut: [{ url: "/logoblack.png", sizes: "any" }],
     apple: [{ url: "/logoblack.png", sizes: "any" }],
@@ -42,6 +45,10 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
+      <head>
+        <link rel="icon" type="image/png" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </head>
       <body className="bg-black text-white antialiased">
         <AuthProvider>{children}</AuthProvider>
       </body>
