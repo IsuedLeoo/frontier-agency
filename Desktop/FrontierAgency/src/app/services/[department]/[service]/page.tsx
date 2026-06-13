@@ -6,7 +6,7 @@ import { getService, getAllServicePaths, allServices } from "../../data";
 import type { ServiceCategory, ServiceItem, ServiceDocumentation } from "../../data";
 import { DepartmentIcon } from "../../icons";
 import Logo from "@/components/Logo";
-import AnthropicIcon from "@/components/AnthropicIcon";
+import ClaudeIcon from "@/components/ClaudeIcon";
 
 interface Props {
   params: Promise<{ department: string; service: string }>;
@@ -493,7 +493,7 @@ export default async function ServicePage({ params }: Props) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide"
             >
-              <AnthropicIcon className="w-3.5 h-3.5" />Anthropic
+              <ClaudeIcon className="w-3.5 h-3.5" />Anthropic
             </a>
             <span className="text-[#333333] mx-1">·</span>
             <a

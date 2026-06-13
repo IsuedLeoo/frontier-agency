@@ -1,4 +1,4 @@
-import AnthropicIcon from "@/components/AnthropicIcon";
+import ClaudeIcon from "@/components/ClaudeIcon";
 
 export default function Footer() {
   return (
@@ -18,7 +18,7 @@ export default function Footer() {
         <span className="hidden sm:inline text-[#333333]">·</span>
         <span className="flex items-center gap-2 text-[0.65rem] sm:text-xs text-[#888888] tracking-[0.1em] uppercase" style={{ fontFamily: "var(--font-inter)" }}>
           <span className="text-[#555555]">In partnership with</span>
-          <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide"><AnthropicIcon className="w-3.5 h-3.5" />Anthropic</a>
+          <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide"><ClaudeIcon className="w-3.5 h-3.5" />Anthropic</a>
           <span className="text-[#333333] mx-1">·</span>
           <a href="https://globallistarealty.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide">Global Lista Realty</a>
         </span>
