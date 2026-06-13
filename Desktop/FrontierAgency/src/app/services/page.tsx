@@ -5,6 +5,7 @@ import Link from "next/link";
 import { allServices, slugify } from "./data";
 import { DepartmentIcon } from "./icons";
 import Logo from "@/components/Logo";
+import AnthropicIcon from "@/components/AnthropicIcon";
 
 export default function ServicesPage() {
   const [search, setSearch] = useState("");
@@ -240,7 +241,7 @@ export default function ServicesPage() {
             <span className="text-[#555555]">company</span>
             <span className="text-[#333333] mx-1">·</span>
             <span className="text-[#555555]">Partnered with</span>
-            <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide">Anthropic</a>
+            <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide"><AnthropicIcon className="w-3.5 h-3.5" />Anthropic</a>
             <span className="text-[#333333] mx-1">·</span>
             <a href="https://globallistarealty.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide">Global Lista Realty</a>
           </div>

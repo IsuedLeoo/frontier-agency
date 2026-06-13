@@ -6,6 +6,7 @@ import { getService, getAllServicePaths, allServices } from "../../data";
 import type { ServiceCategory, ServiceItem, ServiceDocumentation } from "../../data";
 import { DepartmentIcon } from "../../icons";
 import Logo from "@/components/Logo";
+import AnthropicIcon from "@/components/AnthropicIcon";
 
 interface Props {
   params: Promise<{ department: string; service: string }>;
@@ -490,9 +491,9 @@ export default async function ServicePage({ params }: Props) {
               href="https://anthropic.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide"
+              className="inline-flex items-center gap-1.5 font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide"
             >
-              Anthropic
+              <AnthropicIcon className="w-3.5 h-3.5" />Anthropic
             </a>
             <span className="text-[#333333] mx-1">·</span>
             <a
