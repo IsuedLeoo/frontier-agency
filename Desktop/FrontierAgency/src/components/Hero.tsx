@@ -36,7 +36,9 @@ export default function Hero() {
             <span className="hidden sm:inline text-[#333333]">·</span>
             <span className="flex items-center gap-2 text-[0.65rem] sm:text-xs text-[#888888] tracking-[0.08em]" style={{ fontFamily: "var(--font-inter)" }}>
               <span className="text-[#555555]">PARTNERED WITH</span>
-              <span className="font-semibold text-white tracking-wide">Globallista Realty</span>
+              <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white tracking-wide hover:text-[#C5A55A] transition-colors duration-300">Anthropic</a>
+              <span className="text-[#333333] mx-1">·</span>
+              <a href="https://globallistarealty.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white tracking-wide hover:text-[#C5A55A] transition-colors duration-300">Globallista Realty</a>
             </span>
           </div>
 

@@ -16,7 +16,9 @@ export default function Footer() {
         <span className="hidden sm:inline text-[#333333]">·</span>
         <span className="flex items-center gap-2 text-[0.65rem] sm:text-xs text-[#888888] tracking-[0.1em] uppercase" style={{ fontFamily: "var(--font-inter)" }}>
           <span className="text-[#555555]">In partnership with</span>
-          <a href="https://globallistarealty.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#888888] transition-colors duration-300 tracking-wide">Globallista Realty</a>
+          <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide">Anthropic</a>
+          <span className="text-[#333333] mx-1">·</span>
+          <a href="https://globallistarealty.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide">Globallista Realty</a>
         </span>
       </div>
 

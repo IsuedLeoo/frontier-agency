@@ -240,7 +240,9 @@ export default function ServicesPage() {
             <span className="text-[#555555]">company</span>
             <span className="text-[#333333] mx-1">·</span>
             <span className="text-[#555555]">Partnered with</span>
-            <a href="https://globallistarealty.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#888888] transition-colors duration-300 tracking-wide">Globallista Realty</a>
+            <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide">Anthropic</a>
+            <span className="text-[#333333] mx-1">·</span>
+            <a href="https://globallistarealty.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide">Globallista Realty</a>
           </div>
         </div>
       </footer>
