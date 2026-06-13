@@ -38,7 +38,7 @@ export default function Hero() {
               <span className="text-[#555555]">PARTNERED WITH</span>
               <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white tracking-wide hover:text-[#C5A55A] transition-colors duration-300">Anthropic</a>
               <span className="text-[#333333] mx-1">·</span>
-              <a href="https://globallistarealty.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white tracking-wide hover:text-[#C5A55A] transition-colors duration-300">Globallista Realty</a>
+              <a href="https://globallistarealty.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-white tracking-wide hover:text-[#C5A55A] transition-colors duration-300">Global Lista Realty</a>
             </span>
           </div>
 

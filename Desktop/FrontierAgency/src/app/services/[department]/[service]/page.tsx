@@ -501,7 +501,7 @@ export default async function ServicePage({ params }: Props) {
               rel="noopener noreferrer"
               className="font-semibold text-white hover:text-[#C5A55A] transition-colors duration-300 tracking-wide"
             >
-              Globallista Realty
+              Global Lista Realty
             </a>
           </div>
         </div>
