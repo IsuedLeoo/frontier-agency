@@ -1,0 +1,27 @@
+{
+  "name": "frontier-agency-admin",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-06-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    { "pattern": "admin.frontieragency.gstudios.dev/*", "zone_name": "gstudios.dev" }
+  ],
+  "d1_databases": [
+    {
+      "binding": "frontier_agency_db",
+      "database_name": "frontier-agency-db",
+      "database_id": "dbbe76c6-a0e4-4191-8f91-af9db5082f10"
+    }
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "OPENROUTER_API_KEY": "USE_SECRET",
+    "DEEPGRAM_API_KEY": "USE_SECRET",
+    "VAPI_PRIVATE_KEY": "USE_SECRET",
+    "VAPI_ASSISTANT_ID": "USE_SECRET",
+    "VAPI_PHONE_NUMBER_ID": "USE_SECRET"
+  }
+}
