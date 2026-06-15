@@ -23,7 +23,10 @@ const navItems: NavItem[] = [
   { href: "/invoices", label: "Invoices", icon: "invoices", roles: ["admin", "staff"] },
   { href: "/storage", label: "Storage", icon: "storage", roles: ["admin", "staff"] },
   { href: "/docs", label: "Service Docs", icon: "tag", roles: ["admin"] },
-  { href: "/voice", label: "Voice Agent", icon: "phone", roles: ["admin"] },
+  { href: "/voice", label: "Voice Config", icon: "phone", roles: ["admin"] },
+  { href: "/voice/calls", label: "Call History", icon: "phone", roles: ["admin"] },
+  { href: "/voice/agent", label: "Agent Performance", icon: "chart", roles: ["admin"] },
+  { href: "/voice/dialer", label: "Auto-Dialer", icon: "phone", roles: ["admin"] },
   { href: "/analytics", label: "Analytics", icon: "chart", roles: ["admin"] },
 ];
 

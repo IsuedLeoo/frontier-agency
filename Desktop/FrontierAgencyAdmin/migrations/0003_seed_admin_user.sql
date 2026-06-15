@@ -1,0 +1,3 @@
+-- Seed admin user
+-- Password: Admin123! (hashed with PBKDF2-SHA256)
+-- This will be updated with the actual hash via the seed script
