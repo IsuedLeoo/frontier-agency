@@ -20,16 +20,17 @@ export default function CTA() {
       <div className="reveal flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
         <a
           href="#"
+          data-cta="schedule-call"
           className="inline-block px-8 py-4 bg-white text-black text-xs font-semibold uppercase tracking-[0.04em] border border-white hover:bg-transparent hover:text-white transition-all duration-300"
         >
           Schedule a Call
         </a>
         <a
-          href="tel:+17867439361"
+          href="tel:+19862010858"
           className="inline-flex items-center gap-2 text-sm font-medium text-[#888888] hover:text-white transition-colors duration-300"
           style={{ fontFamily: "var(--font-inter)" }}
         >
-          <span className="text-[#C5A55A]">☎</span> (786) 743-9361
+          <span className="text-[#C5A55A]">☎</span> (986) 201-0858
         </a>
       </div>
     </section>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
+import AnalyticsScript from "@/components/AnalyticsScript";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -51,6 +52,7 @@ export default function RootLayout({
       </head>
       <body className="bg-black text-white antialiased">
         <AuthProvider>{children}</AuthProvider>
+        <AnalyticsScript />
       </body>
     </html>
   );

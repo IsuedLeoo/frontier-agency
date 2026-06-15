@@ -34,6 +34,7 @@ export async function GET(request: NextRequest) {
       id: string;
       email: string;
       name: string;
+      role: string;
       created_at: string;
       password_hash: string;
     };

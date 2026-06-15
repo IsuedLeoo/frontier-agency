@@ -22,16 +22,16 @@ export default function Home() {
     <>
       <SmoothScroll />
       <Navbar />
-      <Hero />
-      <Marquee />
-      <About />
-      <Capabilities />
-      <WhyFrontier />
-      <HowItWorks />
-      <SocialProof />
-      <Pricing />
-      <FAQ />
-      <CTA />
+      <section data-section="hero"><Hero /></section>
+      <section data-section="marquee"><Marquee /></section>
+      <section data-section="about"><About /></section>
+      <section data-section="capabilities"><Capabilities /></section>
+      <section data-section="why-frontier"><WhyFrontier /></section>
+      <section data-section="how-it-works"><HowItWorks /></section>
+      <section data-section="social-proof"><SocialProof /></section>
+      <section data-section="pricing"><Pricing /></section>
+      <section data-section="faq"><FAQ /></section>
+      <section data-section="cta"><CTA /></section>
       <Footer />
     </>
   );

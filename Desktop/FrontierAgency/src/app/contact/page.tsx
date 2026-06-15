@@ -30,8 +30,8 @@ export default function Contact() {
         </li>
         <li>
           <strong>Phone:</strong>{' '}
-          <a href="tel:+17867439361" className="text-blue-400 underline">
-            (786) 743–9361
+          <a href="tel:+19862010858" className="text-blue-400 underline">
+            (986) 201–0858
           </a>
         </li>
         <li>

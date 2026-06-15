@@ -81,6 +81,22 @@ const dbQueries = {
   activityLogFindByProjectId:
     "SELECT * FROM activity_log WHERE project_id = ? ORDER BY created_at DESC LIMIT 50",
 
+  // Analytics queries
+  analyticsInsertEvent:
+    "INSERT INTO analytics_events (id, event_type, event_name, page_path, page_title, referrer, fingerprint, session_id, utm_source, utm_medium, utm_campaign, utm_term, utm_content, duration, scroll_depth, event_data, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+  analyticsGetRecentEvents:
+    "SELECT * FROM analytics_events ORDER BY created_at DESC LIMIT ?",
+  analyticsGetPageviewsByDay:
+    "SELECT date(created_at) as day, COUNT(*) as views FROM analytics_events WHERE event_type = 'pageview' AND created_at >= datetime('now', ?) GROUP BY date(created_at) ORDER BY day ASC",
+  analyticsGetTopPages:
+    "SELECT page_path, COUNT(*) as views FROM analytics_events WHERE event_type = 'pageview' AND created_at >= datetime('now', ?) GROUP BY page_path ORDER BY views DESC LIMIT 10",
+  analyticsGetUniqueVisitorsByDay:
+    "SELECT date(created_at) as day, COUNT(DISTINCT fingerprint) as visitors FROM analytics_events WHERE created_at >= datetime('now', ?) GROUP BY date(created_at) ORDER BY day ASC",
+  analyticsGetEventCountsByType:
+    "SELECT event_type, COUNT(*) as count FROM analytics_events WHERE created_at >= datetime('now', ?) GROUP BY event_type ORDER BY count DESC",
+  analyticsGetTotalEvents:
+    "SELECT COUNT(*) as total FROM analytics_events WHERE created_at >= datetime('now', ?)",
+
   // Integrations queries
   integrationCreate:
     "INSERT INTO integrations (id, user_id, project_id, provider, access_token, refresh_token, webhook_url, config, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -206,6 +222,16 @@ export class D1Database {
     updateStatus: this.prepare(dbQueries.integrationUpdateStatus),
     deleteById: this.prepare(dbQueries.integrationDeleteById),
   };
+
+  analyticsQueries = {
+    insertEvent: this.prepare(dbQueries.analyticsInsertEvent),
+    getRecentEvents: this.prepare(dbQueries.analyticsGetRecentEvents),
+    getPageviewsByDay: this.prepare(dbQueries.analyticsGetPageviewsByDay),
+    getTopPages: this.prepare(dbQueries.analyticsGetTopPages),
+    getUniqueVisitorsByDay: this.prepare(dbQueries.analyticsGetUniqueVisitorsByDay),
+    getEventCountsByType: this.prepare(dbQueries.analyticsGetEventCountsByType),
+    getTotalEvents: this.prepare(dbQueries.analyticsGetTotalEvents),
+  };
 }
 
 // Initialize database - this will be called from middleware or API routes
@@ -219,6 +245,7 @@ export function initializeD1(db: CF_D1Database) {
       email TEXT UNIQUE NOT NULL,
       password_hash TEXT NOT NULL,
       name TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'user',
       created_at TEXT NOT NULL
     );
 
@@ -277,6 +304,29 @@ export function initializeD1(db: CF_D1Database) {
       FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
     );
 
+    CREATE TABLE IF NOT EXISTS analytics_events (
+      id TEXT PRIMARY KEY,
+      event_type TEXT NOT NULL,
+      event_name TEXT,
+      page_path TEXT,
+      page_title TEXT,
+      referrer TEXT,
+      fingerprint TEXT,
+      session_id TEXT,
+      utm_source TEXT,
+      utm_medium TEXT,
+      utm_campaign TEXT,
+      utm_term TEXT,
+      utm_content TEXT,
+      duration REAL,
+      scroll_depth INTEGER,
+      event_data TEXT DEFAULT '{}',
+      created_at TEXT NOT NULL
+    );
+
+    -- Migration: add role column if it doesn't exist (safe no-op on fresh DB)
+    ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user';
+
     -- Indexes
     CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
     CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id);
@@ -290,6 +340,10 @@ export function initializeD1(db: CF_D1Database) {
     CREATE INDEX IF NOT EXISTS idx_integrations_user_id ON integrations(user_id);
     CREATE INDEX IF NOT EXISTS idx_integrations_project_id ON integrations(project_id);
     CREATE INDEX IF NOT EXISTS idx_integrations_provider ON integrations(provider);
+    CREATE INDEX IF NOT EXISTS idx_analytics_event_type ON analytics_events(event_type);
+    CREATE INDEX IF NOT EXISTS idx_analytics_created_at ON analytics_events(created_at);
+    CREATE INDEX IF NOT EXISTS idx_analytics_fingerprint ON analytics_events(fingerprint);
+    CREATE INDEX IF NOT EXISTS idx_analytics_session_id ON analytics_events(session_id);
   `;
 
   database.exec(schema);
@@ -313,6 +367,7 @@ export function getDatabaseQueries(db: CF_D1Database) {
     projectServiceQueries: database.projectServiceQueries,
     activityLogQueries: database.activityLogQueries,
     integrationQueries: database.integrationQueries,
+    analyticsQueries: database.analyticsQueries,
   };
 }
 

@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
         email.toLowerCase().trim(),
         passwordHash,
         name.trim(),
+        "user",
         createdAt
       )
       .run();

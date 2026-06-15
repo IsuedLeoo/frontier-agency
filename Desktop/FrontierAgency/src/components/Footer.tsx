@@ -33,11 +33,11 @@ export default function Footer() {
             &copy; 2026 Frontier Agency. All rights reserved.
           </span>
           <a
-            href="tel:+17867439361"
+            href="tel:+19862010858"
             className="text-xs text-[#888888] hover:text-white transition-colors duration-300"
             style={{ fontFamily: "var(--font-inter)" }}
           >
-            (786) 743-9361
+            (986) 201-0858
           </a>
           <span
             className="text-xs text-[#333333] hidden sm:inline"

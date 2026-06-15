@@ -9,16 +9,13 @@ export default async function AdminLayout({
 }) {
   const session = await getSession(await headers());
 
-  // For now, we'll just check if user is logged in
-  // In a real app, you'd have an admin role flag in the user table
   if (!session) {
     redirect("/login");
   }
 
-  // TODO: Add proper admin role check
-  // if (!session.user.isAdmin) {
-  //   redirect("/dashboard");
-  // }
+  if (session.user.role !== "admin") {
+    redirect("/dashboard");
+  }
 
   return (
     <div className="flex min-h-screen bg-black text-white">
@@ -63,6 +60,15 @@ export default async function AdminLayout({
                 style={{ fontFamily: "var(--font-inter)" }}
               >
                 Projects
+              </a>
+            </li>
+            <li>
+              <a
+                href="/admin/analytics"
+                className="flex items-center gap-3 px-3 py-2.5 text-xs font-medium uppercase tracking-[0.04em] text-[#888888] hover:text-white border-l-2 border-transparent hover:border-[#C5A55A] transition-colors duration-200"
+                style={{ fontFamily: "var(--font-inter)" }}
+              >
+                Analytics
               </a>
             </li>
           </ul>

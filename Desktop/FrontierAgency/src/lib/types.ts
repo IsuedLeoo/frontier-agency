@@ -3,6 +3,7 @@ export interface User {
   email: string;
   password_hash: string;
   name: string;
+  role: string;
   created_at: string;
 }
 
@@ -16,5 +17,6 @@ export interface SafeUser {
   id: string;
   email: string;
   name: string;
+  role: string;
   created_at: string;
 }

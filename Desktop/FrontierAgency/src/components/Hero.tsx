@@ -52,10 +52,10 @@ export default function Hero() {
               Start a Project
             </a>
             <a
-              href="tel:+17867439361"
+              href="tel:+19862010858"
               className="w-full sm:w-auto text-center px-8 py-4 bg-transparent text-white text-xs font-medium uppercase tracking-[0.04em] border border-[#333333] hover:border-white transition-all duration-300"
             >
-              Call (786) 743-9361
+              Call (986) 201-0858
             </a>
           </div>
         </div>
