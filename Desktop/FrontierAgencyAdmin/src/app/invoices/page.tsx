@@ -14,7 +14,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
   const statusFilter = String(params.status || "");
 
   const allInvoices = await invoiceQueries.listAll(db);
-  let invoices = (allInvoices.results ?? []) as any[];
+  let invoices = allInvoices.results ?? [];
 
   if (statusFilter) {
     invoices = invoices.filter((i) => i.status === statusFilter);

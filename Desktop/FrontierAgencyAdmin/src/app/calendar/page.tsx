@@ -27,7 +27,7 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
   const monthEnd = `${safeYear}-${String(safeMonth + 1).padStart(2, "0")}-${String(daysInMonth).padStart(2, "0")}`;
 
   const allAppts = await appointmentsQueries.listAll(db, 200);
-  const appointments = ((allAppts.results ?? []) as any[]).filter((a) => {
+  const appointments = (allAppts.results ?? []).filter((a) => {
     const d = a.scheduled_at?.substring(0, 10);
     return d >= monthStart && d <= monthEnd;
   });
@@ -42,7 +42,7 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
 
   // Get all clients for the dropdown search
   const allClientsRes = await crmClientsQueries.listAll(db, 100);
-  const allClients = (allClientsRes.results ?? []) as any[];
+  const allClients = allClientsRes.results ?? [];
 
   return (
     <AdminShell user={user}>

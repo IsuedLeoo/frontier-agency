@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       callIds: result.calls,
     });
   } catch (err) {
-    console.error("[Dialer] Schedule error:", err);
+    // Dialer scheduling error
     return Response.json(
       { error: "Failed to schedule calls" },
       { status: 500 }

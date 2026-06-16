@@ -94,7 +94,7 @@ export async function POST(request: Request) {
       })),
     });
   } catch (err) {
-    console.error("[Analyze] Error:", err);
+    // Call analysis error
     return Response.json(
       { error: "Failed to analyze calls" },
       { status: 500 }

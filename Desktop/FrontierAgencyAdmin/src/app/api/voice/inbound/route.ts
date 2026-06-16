@@ -3,6 +3,17 @@ import { executeToolLocally } from "../tools-locally";
 
 export const dynamic = "force-dynamic";
 
+interface VapiInboundMessage {
+  type?: string;
+  toolCallList?: Array<{ id: string; name: string; arguments: Record<string, unknown> }>;
+  call?: { id?: string; customer?: { number?: string } };
+  functionCall?: { name: string; parameters: unknown };
+}
+
+interface VapiInboundBody {
+  message?: VapiInboundMessage;
+}
+
 /**
  * Vapi tool-calling and function-call endpoint.
  *
@@ -16,10 +27,8 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as any;
+    const body = (await request.json()) as VapiInboundBody;
     const msg = body.message;
-
-    console.log("[Vapi Inbound] Type:", msg?.type ?? "unknown", JSON.stringify(body).substring(0, 500));
 
     // Handle tool-calls events (batch)
     if (msg && msg.type === "tool-calls" && msg.toolCallList) {
@@ -51,8 +60,7 @@ export async function POST(request: Request) {
 
     // For any other event type, just acknowledge
     return new Response(null, { status: 200 });
-  } catch (err) {
-    console.error("[Vapi Inbound] Error:", err);
+  } catch {
     // Return 200 with error result to keep the call alive —
     // returning errors during a call can cause Vapi to hang up
     return Response.json({

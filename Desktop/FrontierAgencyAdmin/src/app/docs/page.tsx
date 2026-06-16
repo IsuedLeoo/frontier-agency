@@ -12,7 +12,7 @@ export default async function DocsPage({ searchParams }: { searchParams: Promise
   const search = String(params.search || "").toLowerCase();
 
   const docsRes = await serviceDocsQueries.listAll(db);
-  let docs = (docsRes.results ?? []) as any[];
+  let docs = docsRes.results ?? [];
 
   if (search) {
     docs = docs.filter(

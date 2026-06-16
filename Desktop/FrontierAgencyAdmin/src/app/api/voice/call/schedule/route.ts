@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     const calls = await voiceCallScheduleQueries.listAll(db, limit);
     return Response.json({ calls: calls.results ?? [], total: (calls.results ?? []).length });
   } catch (err) {
-    console.error("[Voice Schedule] GET error:", err);
+    // Schedule fetch error
     return Response.json({ error: "Failed to fetch scheduled calls" }, { status: 500 });
   }
 }

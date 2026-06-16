@@ -12,7 +12,7 @@ export default async function StaffPage() {
   const db = getDb();
 
   const staffRes = await userQueries.findByRole(db, "staff");
-  const staff = (staffRes.results ?? []) as any[];
+  const staff = staffRes.results ?? [];
 
   return (
     <AdminShell user={user}>
@@ -62,7 +62,7 @@ export default async function StaffPage() {
                       {new Date(member.created_at).toLocaleDateString()}
                     </td>
                     <td>
-                      {(member.is_active === 1 || member.is_active === true) && member.id !== user.id && (
+                      {member.is_active && member.id !== user.id && (
                         <DeactivateButton userId={member.id} />
                       )}
                     </td>

@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     const body = (await request.json()) as VapiWebhookEvent;
     const msg = body.message;
 
-    console.log("[Vapi Webhook]", msg?.type ?? "unknown", JSON.stringify(body).substring(0, 500));
+    // Vapi webhook received
 
     // Persist call data to D1 for important events
     if (msg) {
@@ -98,7 +98,7 @@ export async function POST(request: Request) {
         }
       } catch (dbErr) {
         // Log but don't fail the webhook — Vapi doesn't retry on error
-        console.error("[Vapi Webhook] DB error:", dbErr);
+        // Webhook DB error
       }
     }
 
@@ -110,7 +110,7 @@ export async function POST(request: Request) {
 
     return new Response(null, { status: 200 });
   } catch (err) {
-    console.error("[Vapi Webhook] Error:", err);
+    // Webhook processing error
     // Return 200 to prevent Vapi from retrying — we don't want duplicate events
     return new Response(null, { status: 200 });
   }

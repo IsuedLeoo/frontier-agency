@@ -22,7 +22,7 @@ export async function GET(
     }
     return Response.json({ script });
   } catch (err) {
-    console.error("[Call Scripts] Get error:", err);
+    // Script fetch error
     return Response.json({ error: "Failed to fetch script" }, { status: 500 });
   }
 }
@@ -60,7 +60,7 @@ export async function PUT(
 
     return Response.json({ success: true, id });
   } catch (err) {
-    console.error("[Call Scripts] Update error:", err);
+    // Script update error
     return Response.json({ error: "Failed to update script" }, { status: 500 });
   }
 }
@@ -80,7 +80,7 @@ export async function DELETE(
     await callScriptQueries.delete(db, id);
     return Response.json({ success: true });
   } catch (err) {
-    console.error("[Call Scripts] Delete error:", err);
+    // Script delete error
     return Response.json({ error: "Failed to delete script" }, { status: 500 });
   }
 }

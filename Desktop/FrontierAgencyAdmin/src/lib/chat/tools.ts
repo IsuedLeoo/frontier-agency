@@ -332,7 +332,7 @@ export async function executeTool(
   switch (name) {
     case "list_clients": {
       const result = await crmClientsQueries.listAll(db);
-      let clients = (result.results ?? []) as any[];
+      let clients = result.results ?? [];
 
       if (args.status) {
         clients = clients.filter((c) => c.status === args.status);
@@ -382,9 +382,9 @@ export async function executeTool(
         clientNotesQueries.findByClient(db, client.id),
       ]);
 
-      const invoiceList = (invoicesRes.results ?? []) as any[];
-      const appointmentList = (appointmentsRes.results ?? []) as any[];
-      const noteList = (notesRes.results ?? []) as any[];
+      const invoiceList = invoicesRes.results ?? [];
+      const appointmentList = appointmentsRes.results ?? [];
+      const noteList = notesRes.results ?? [];
 
       const totalInvoiced = invoiceList.reduce((s, i) => s + (i.amount || 0), 0);
       const totalPaid = invoiceList.filter((i) => i.status === "paid").reduce((s, i) => s + (i.amount || 0), 0);

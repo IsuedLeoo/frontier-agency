@@ -17,7 +17,7 @@ export async function GET(
     if (!agent) return Response.json({ error: "Agent not found" }, { status: 404 });
     return Response.json({ agent });
   } catch (err) {
-    console.error("[Agents] Get error:", err);
+    // Agent fetch error
     return Response.json({ error: "Failed to fetch agent" }, { status: 500 });
   }
 }
@@ -60,7 +60,7 @@ export async function PUT(
 
     return Response.json({ success: true, id });
   } catch (err) {
-    console.error("[Agents] Update error:", err);
+    // Agent update error
     return Response.json({ error: "Failed to update agent" }, { status: 500 });
   }
 }
@@ -78,7 +78,7 @@ export async function DELETE(
     await agentProfileQueries.delete(db, id);
     return Response.json({ success: true });
   } catch (err) {
-    console.error("[Agents] Delete error:", err);
+    // Agent delete error
     return Response.json({ error: "Failed to delete agent" }, { status: 500 });
   }
 }

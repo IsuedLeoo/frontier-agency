@@ -16,18 +16,18 @@ export default async function ClientsPage({ searchParams }: { searchParams: Prom
   const priorityFilter = String(params.priority || "");
 
   const clientsRes = await crmClientsQueries.listAll(db);
-  let clients = (clientsRes.results ?? []) as any[];
+  let clients = clientsRes.results ?? [];
 
   // Fetch invoice totals per client
   let clientsWithStats = await Promise.all(
     clients.map(async (c) => {
       const invoices = await invoiceQueries.findByClient(db, c.id);
-      const results = (invoices.results ?? []) as any[];
+      const invList = invoices.results ?? [];
       return {
         ...c,
-        total_invoiced: results.reduce((sum, i) => sum + (i.amount || 0), 0),
-        total_paid: results.filter((i) => i.status === "paid").reduce((sum, i) => sum + (i.amount || 0), 0),
-        invoice_count: results.length,
+        total_invoiced: invList.reduce((sum, i) => sum + (i.amount || 0), 0),
+        total_paid: invList.filter((i) => i.status === "paid").reduce((sum, i) => sum + (i.amount || 0), 0),
+        invoice_count: invList.length,
       };
     })
   );

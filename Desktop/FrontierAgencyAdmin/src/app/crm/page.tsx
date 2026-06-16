@@ -14,7 +14,7 @@ export default async function CrmPage({ searchParams }: { searchParams: Promise<
 
   const limit = 50;
   const clientsRes = await crmClientsQueries.listAll(db, limit, 0);
-  let clients = (clientsRes.results ?? []) as any[];
+  let clients = clientsRes.results ?? [];
 
   if (status) {
     clients = clients.filter((c) => c.status === status);

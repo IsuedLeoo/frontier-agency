@@ -50,12 +50,12 @@ export default async function DashboardPage() {
           />
           <StatsCard
             title="Monthly Revenue"
-            value={`$${((revenue?.total ?? 0) as number).toLocaleString()}`}
+            value={`$${Number(revenue?.total ?? 0).toLocaleString()}`}
             icon="invoices"
           />
           <StatsCard
             title="Outstanding"
-            value={`$${((outstanding?.total ?? 0) as number).toLocaleString()}`}
+            value={`$${Number(outstanding?.total ?? 0).toLocaleString()}`}
             subtitle={`${outstanding?.count ?? 0} invoices`}
             icon="outstanding"
           />
@@ -92,7 +92,7 @@ export default async function DashboardPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {(recentInvoices.results as any[]).slice(0, 5).map((invoice) => (
+                  {(recentInvoices.results as Array<{ id: string; invoice_number: string; client_name: string | null; amount: number; status: string }>).slice(0, 5).map((invoice) => (
                     <tr key={invoice.id}>
                       <td className="font-mono text-[#C5A55A]">{invoice.invoice_number}</td>
                       <td>{invoice.client_name ?? "—"}</td>

@@ -2,7 +2,7 @@
  * Local tool execution — shared between /api/voice/tools and /api/voice/inbound
  */
 import { getDb, crmClientsQueries, appointmentsQueries, clientNotesQueries, serviceDocsQueries, generateId } from "@/lib/db";
-import type { CrmClient } from "@/lib/types";
+import type { CrmClient, Appointment } from "@/lib/types";
 
 export interface VapiToolCall {
   id: string;
@@ -161,15 +161,15 @@ export async function executeToolLocally(
       case "update_appointment": {
         const appointmentId = args?.appointment_id as string;
         if (!appointmentId) { result = { success: false, message: "appointment_id is required" }; break; }
-        const updates: Record<string, unknown> = {};
+        const updates: Partial<Appointment> = {};
         if (args?.title) updates.title = args.title as string;
         if (args?.description !== undefined) updates.description = (args.description as string) || null;
         if (args?.scheduled_at) updates.scheduled_at = args.scheduled_at as string;
         if (args?.duration_minutes) updates.duration_minutes = Number(args.duration_minutes);
-        if (args?.status) updates.status = args.status as string;
+        if (args?.status) updates.status = args.status as Appointment["status"];
         if (args?.notes !== undefined) updates.notes = (args.notes as string) || null;
         if (Object.keys(updates).length === 0) { result = { success: false, message: "No fields to update" }; break; }
-        await appointmentsQueries.update(db, appointmentId, updates as any);
+        await appointmentsQueries.update(db, appointmentId, updates);
         result = { success: true, message: `Appointment updated. Changed: ${Object.keys(updates).join(", ")}` };
         break;
       }
@@ -218,8 +218,12 @@ export async function executeToolLocally(
       }
 
       case "transfer_call": {
-        const transferNumber = (args?.phone_number as string) ?? "+19862010858";
-        result = { success: true, transfer_number: transferNumber, message: `Transferring call to ${transferNumber}.` };
+        const transferNumber = (args?.phone_number as string) ?? "";
+        if (!transferNumber) {
+          result = { success: false, message: "No transfer number configured. Please provide a phone_number." };
+        } else {
+          result = { success: true, transfer_number: transferNumber, message: `Transferring call to ${transferNumber}.` };
+        }
         break;
       }
 
@@ -227,10 +231,10 @@ export async function executeToolLocally(
         result = { success: false, message: `Unknown function: ${functionName}` };
     }
   } catch (toolErr: any) {
-    console.error(`[Vapi Tool] ${functionName} error:`, toolErr);
+    // Vapi tool execution error
     result = { success: false, message: `Error: ${toolErr.message ?? "Unknown error"}` };
   }
 
-  console.log(`[Vapi Tool] ${functionName} result:`, JSON.stringify(result).substring(0, 200));
+  // Tool executed
   return result;
 }

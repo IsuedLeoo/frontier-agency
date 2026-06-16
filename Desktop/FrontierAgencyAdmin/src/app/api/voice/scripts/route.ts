@@ -15,7 +15,7 @@ export async function GET() {
     const scripts = await callScriptQueries.listAll(db);
     return Response.json({ scripts: scripts.results ?? [] });
   } catch (err) {
-    console.error("[Call Scripts] List error:", err);
+    // Scripts list error
     return Response.json({ error: "Failed to fetch scripts" }, { status: 500 });
   }
 }
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
 
     return Response.json({ success: true, id });
   } catch (err) {
-    console.error("[Call Scripts] Create error:", err);
+    // Script create error
     return Response.json({ error: "Failed to create script" }, { status: 500 });
   }
 }

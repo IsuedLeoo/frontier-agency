@@ -7,7 +7,7 @@
  * It checks for pending calls that are due and initiates them via Vapi.
  */
 
-import { getDb, voiceCallScheduleQueries, voiceCallsQueries, generateId } from "@/lib/db";
+import { getDb, voiceCallScheduleQueries, voiceCallsQueries, generateId, voiceConfigQueries } from "@/lib/db";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { getPendingCalls, completeScheduledCall } from "@/lib/voice/auto-dialer";
 import { initiateOutboundCall } from "@/lib/voice/vapi";
@@ -56,12 +56,16 @@ export async function POST(request: Request) {
           },
         });
 
+        // Get the configured phone number for from_number
+        const voiceConfig = await voiceConfigQueries.get(db);
+        const fromNumber = voiceConfig?.phone_number || null;
+
         // Create voice_calls record
         await voiceCallsQueries.create(db, {
           id: generateId(),
           call_control_id: callId,
           direction: "outbound",
-          from_number: "+19862010858",
+          from_number: fromNumber,
           to_number: call.phone_number,
           status: "initiated",
           initiated_by: null, // system-initiated
@@ -72,7 +76,7 @@ export async function POST(request: Request) {
 
         results.push({ scheduleId: call.id, callId });
       } catch (err) {
-        console.error(`[Dialer] Failed to execute call ${call.id}:`, err);
+        // Failed to execute scheduled call
         await completeScheduledCall(db, call.id, "failed");
         results.push({
           scheduleId: call.id,
@@ -86,7 +90,7 @@ export async function POST(request: Request) {
       results,
     });
   } catch (err) {
-    console.error("[Dialer] Execute error:", err);
+    // Dialer execution error
     return Response.json(
       { error: "Failed to execute dialer" },
       { status: 500 }

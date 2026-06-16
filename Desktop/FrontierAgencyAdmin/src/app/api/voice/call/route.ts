@@ -105,7 +105,7 @@ export async function POST(request: Request) {
       message: `Calling ${phoneNumber}...`,
     });
   } catch (err) {
-    console.error("[Voice] Outbound call error:", err);
+    // Outbound call error
     return Response.json(
       { error: err instanceof Error ? err.message : "Failed to initiate call" },
       { status: 500 }

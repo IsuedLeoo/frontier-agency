@@ -251,29 +251,21 @@ export function handleInboundWebhook(
       };
 
     case "status-update":
-      console.log(`[Vapi] Call ${message.callId} status: ${message.status}`);
       return null;
 
     case "end-of-call-report":
-      console.log(
-        `[Vapi] Call ${message.callId} ended. Duration: ${message.durationSeconds}s`
-      );
-      console.log(`[Vapi] Summary: ${message.summary}`);
       return null;
 
     case "hang":
-      console.log(`[Vapi] Call ${message.callId} hung up`);
       return null;
 
     case "transcript":
-      console.log(`[Vapi] ${message.role}: ${message.transcript}`);
       return null;
 
     case "speech-update":
       return null;
 
     case "function-call":
-      console.log(`[Vapi] Function call: ${message.functionCall.name}`);
       return {
         result: `The ${message.functionCall.name} function will be processed. Please continue the conversation.`,
       };
@@ -285,7 +277,6 @@ export function handleInboundWebhook(
       return null;
 
     default:
-      console.log(`[Vapi] Unhandled event type`);
       return null;
   }
 }

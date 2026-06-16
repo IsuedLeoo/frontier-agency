@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     const toolCallList: VapiToolCall[] = message.toolCallList ?? [];
     const phoneNumber = message.call?.customer?.number;
 
-    console.log(`[Vapi Tool] Received ${toolCallList.length} tool call(s)`);
+    // Processing tool calls
 
     const db = getDb();
     const results: Array<{ toolCallId: string; result: unknown }> = [];
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
 
     return Response.json({ results });
   } catch (err) {
-    console.error("[Vapi Tool] Error:", err);
+    // Vapi tool route error
     return Response.json(
       { results: [{ toolCallId: "unknown", result: { success: false, message: "An error occurred processing the request" } }] },
       { status: 200 }

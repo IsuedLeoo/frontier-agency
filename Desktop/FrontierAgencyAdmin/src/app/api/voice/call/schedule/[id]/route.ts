@@ -33,7 +33,7 @@ export async function PATCH(
     await voiceCallScheduleQueries.updateStatus(db, id, status);
     return Response.json({ success: true, id, status });
   } catch (err) {
-    console.error("[Voice Schedule] PATCH error:", err);
+    // Schedule update error
     return Response.json({ error: "Failed to update scheduled call" }, { status: 500 });
   }
 }

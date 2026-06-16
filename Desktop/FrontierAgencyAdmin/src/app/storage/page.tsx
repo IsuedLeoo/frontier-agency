@@ -20,7 +20,7 @@ export default async function StoragePage() {
   const db = getDb();
 
   const docsRes = await documentQueries.listAll(db);
-  const documents = (docsRes.results ?? []) as any[];
+  const documents = docsRes.results ?? [];
 
   const grouped: Record<string, any[]> = {};
   for (const doc of documents) {

@@ -170,7 +170,7 @@ export async function POST(request: Request) {
       },
     });
   } catch (err) {
-    console.error("Analytics track error:", err);
+    // Analytics tracking error
     return Response.json({ error: "Internal error" }, { status: 500 });
   }
 }

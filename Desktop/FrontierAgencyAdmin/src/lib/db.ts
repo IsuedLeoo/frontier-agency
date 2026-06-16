@@ -469,7 +469,7 @@ const DEFAULT_VOICE_CONFIG = {
   inbound_model: "openai/gpt-4o",
   inbound_silence_timeout: 45,
   inbound_response_delay: 3,
-  phone_number: "+19862010858",
+  phone_number: "",
   phone_number_id: "",
   updated_at: new Date().toISOString(),
   updated_by: null,

@@ -12,7 +12,7 @@ export async function GET() {
     const agents = await agentProfileQueries.listAll(db);
     return Response.json({ agents: agents.results ?? [] });
   } catch (err) {
-    console.error("[Agents] List error:", err);
+    // Error listing agents
     return Response.json({ error: "Failed to fetch agents" }, { status: 500 });
   }
 }
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
 
     return Response.json({ success: true, id });
   } catch (err) {
-    console.error("[Agents] Create error:", err);
+    // Error creating agent
     return Response.json({ error: "Failed to create agent" }, { status: 500 });
   }
 }

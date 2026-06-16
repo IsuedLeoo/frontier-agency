@@ -15,10 +15,10 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
   if (!client) notFound();
 
   const notesRes = await clientNotesQueries.findByClient(db, id);
-  const notes = (notesRes.results ?? []) as any[];
+  const notes = notesRes.results ?? [];
 
   const apptsRes = await appointmentsQueries.findByClient(db, id);
-  const appointments = (apptsRes.results ?? []) as any[];
+  const appointments = apptsRes.results ?? [];
 
   return (
     <AdminShell user={user}>

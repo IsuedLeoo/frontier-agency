@@ -12,11 +12,13 @@ export async function handleScheduledEvent(
   const baseUrl = env.WORKER_BASE_URL as string | undefined;
   const cronSecret = env.CRON_SECRET as string | undefined;
 
-  const url = baseUrl
-    ? `${baseUrl}/api/voice/dialer/execute`
-    : "https://admin.frontieragency.gstudios.dev/api/voice/dialer/execute";
+  if (!baseUrl) {
+    // WORKER_BASE_URL env var must be configured
+    return;
+  }
+  const url = `${baseUrl}/api/voice/dialer/execute`;
 
-  console.log(`[Cron] Triggering dialer at ${url}`);
+  // Triggering dialer
 
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (cronSecret) {
@@ -31,21 +33,21 @@ export async function handleScheduledEvent(
 
     if (response.ok) {
       const result = (await response.json()) as { executed?: number; message?: string };
-      console.log(`[Cron] Dialer executed: ${result.executed ?? 0} calls`);
+      // Dialer executed
     } else {
-      console.error(`[Cron] Dialer failed: ${response.status} ${response.statusText}`);
+      // Dialer failed, retrying
       // Retry once on failure
       ctx.waitUntil(
         new Promise((resolve) =>
           setTimeout(async () => {
             const retryResponse = await fetch(url, { method: "POST", headers });
-            console.log(`[Cron] Retry status: ${retryResponse.status}`);
+            // Retry attempted
             resolve(undefined);
           }, 30_000)
         )
       );
     }
   } catch (err) {
-    console.error(`[Cron] Dialer execution error:`, err);
+    // Cron dialer execution error
   }
 }

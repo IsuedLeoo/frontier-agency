@@ -40,7 +40,7 @@ export async function GET() {
     const config = await voiceConfigQueries.get(db);
     return Response.json({ config });
   } catch (err) {
-    console.error("[Voice Config] GET error:", err);
+    // Error fetching voice config
     return Response.json({ error: "Failed to fetch config" }, { status: 500 });
   }
 }
@@ -82,7 +82,7 @@ export async function PUT(request: Request) {
     try {
       await updateAssistant(updatedConfig, direction);
     } catch (vapiErr) {
-      console.error("[Voice Config] Vapi update error:", vapiErr);
+      // Vapi sync failed — DB was updated
       // Still return success — DB was updated, Vapi sync can be retried
       return Response.json({
         success: true,
@@ -93,7 +93,7 @@ export async function PUT(request: Request) {
 
     return Response.json({ success: true, config: updatedConfig });
   } catch (err) {
-    console.error("[Voice Config] PUT error:", err);
+    // Error updating voice config
     return Response.json(
       { error: err instanceof Error ? err.message : "Failed to update config" },
       { status: 500 }

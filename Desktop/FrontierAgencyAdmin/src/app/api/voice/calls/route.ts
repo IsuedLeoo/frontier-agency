@@ -28,7 +28,7 @@ export async function GET(request: Request) {
       total: (dbCalls.results ?? []).length,
     });
   } catch (err) {
-    console.error("[Voice] List calls error:", err);
+    // Error listing voice calls
     return Response.json({ error: "Failed to fetch calls" }, { status: 500 });
   }
 }

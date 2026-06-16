@@ -28,7 +28,7 @@ export interface DialerConfig {
 export const DEFAULT_CONFIG: DialerConfig = {
   callsPerDay: 5,
   startHour: 9,
-  endHour: 18,
+  endHour: 17,
   timezone: "America/New_York",
   daysOfWeek: [1, 2, 3, 4, 5], // Mon-Fri
 };

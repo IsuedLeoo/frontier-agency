@@ -23,9 +23,9 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
     clientNotesQueries.findByClient(db, client.id),
   ]);
 
-  const invoiceList = (invoicesRes.results ?? []) as any[];
-  const appointmentList = (appointmentsRes.results ?? []) as any[];
-  const noteList = (notesRes.results ?? []) as any[];
+  const invoiceList = invoicesRes.results ?? [];
+  const appointmentList = appointmentsRes.results ?? [];
+  const noteList = notesRes.results ?? [];
 
   const totalInvoiced = invoiceList.reduce((s, i) => s + (i.amount || 0), 0);
   const totalPaid = invoiceList.filter((i) => i.status === "paid").reduce((s, i) => s + (i.amount || 0), 0);

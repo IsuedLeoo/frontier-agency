@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import type { SafeUser } from "@/lib/types";
 import Icon from "./Icons";
 import type { IconName } from "./Icons";
 import ChatSidebar from "./chat/ChatSidebar";
+import { Headphones, X } from "lucide-react";
 
 interface NavItem {
   href: string;
@@ -38,6 +40,7 @@ interface AdminShellProps {
 export default function AdminShell({ user, children }: AdminShellProps) {
   const pathname = usePathname();
   const visibleNav = navItems.filter((item) => item.roles.includes(user.role));
+  const [chatOpen, setChatOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen">
@@ -108,15 +111,27 @@ export default function AdminShell({ user, children }: AdminShellProps) {
           >
             {visibleNav.find((n) => pathname === n.href || (n.href !== "/" && pathname.startsWith(n.href)))?.label || "Dashboard"}
           </h1>
-          <form action="/api/auth/logout" method="POST">
+          <div className="flex items-center gap-4">
             <button
-              type="submit"
-              className="text-xs text-[#555] hover:text-white uppercase tracking-[0.1em] transition-colors"
+              type="button"
+              onClick={() => setChatOpen(!chatOpen)}
+              className="text-xs text-[#555] hover:text-[#C5A55A] uppercase tracking-[0.1em] transition-colors flex items-center gap-1.5"
               style={{ fontFamily: "var(--font-inter)" }}
+              title="AI Assistant"
             >
-              Logout
+              <Headphones size={14} />
+              <span className="hidden sm:inline">{chatOpen ? "Close AI" : "AI Assistant"}</span>
             </button>
-          </form>
+            <form action="/api/auth/logout" method="POST">
+              <button
+                type="submit"
+                className="text-xs text-[#555] hover:text-white uppercase tracking-[0.1em] transition-colors"
+                style={{ fontFamily: "var(--font-inter)" }}
+              >
+                Logout
+              </button>
+            </form>
+          </div>
         </header>
 
         {/* Page content */}
@@ -125,10 +140,12 @@ export default function AdminShell({ user, children }: AdminShellProps) {
         </main>
       </div>
 
-      {/* ─── AI Assistant Sidebar (permanent) ─── */}
-      <aside className="w-[380px] shrink-0 border-l border-[#1a1a1a] bg-[#0a0a0a] flex flex-col">
-        <ChatSidebar />
-      </aside>
+      {/* ─── AI Assistant Sidebar (toggleable overlay) ─── */}
+      {chatOpen && (
+        <aside className="w-[380px] shrink-0 border-l border-[#1a1a1a] bg-[#0a0a0a] flex flex-col">
+          <ChatSidebar />
+        </aside>
+      )}
     </div>
   );
 }
