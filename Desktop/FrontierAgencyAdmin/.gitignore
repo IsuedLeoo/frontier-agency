@@ -29,3 +29,4 @@ next-env.d.ts
 # Logs
 *.log
 npm-debug.log*
+Desktop/FrontierAgencyAdmin/.dev.vars
