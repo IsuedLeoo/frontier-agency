@@ -2,12 +2,15 @@ import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import Link from "next/link";
-import { LayoutDashboard, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Settings, LogOut, Package, Briefcase, Webhook } from "lucide-react";
 import LogoutButton from "./logout-button";
 import Logo from "@/components/Logo";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+  { icon: Package, label: "Services", href: "/dashboard/services" },
+  { icon: Briefcase, label: "Projects", href: "/dashboard/projects" },
+  { icon: Webhook, label: "Webhooks", href: "/dashboard/webhooks" },
   { icon: Settings, label: "Settings", href: "/dashboard/settings" },
 ];
 

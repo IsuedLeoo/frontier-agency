@@ -295,15 +295,15 @@ export default async function DashboardPage() {
           </Link>
 
           <Link
-            href="/dashboard/activity"
+            href="/dashboard/webhooks"
             className="bg-black px-6 py-4 rounded-xl border border-[#333333] hover:border-[#C5A55A] transition-colors duration-300 group"
           >
             <div className="flex items-center gap-3">
               <Bell size={20} className="text-[#C5A55A]" />
               <div>
-                <h3 className="font-semibold text-white">Activity Feed</h3>
+                <h3 className="font-semibold text-white">Webhooks</h3>
                 <p className="text-sm text-[#888888]">
-                  View all recent updates
+                  Manage your webhook endpoints
                 </p>
               </div>
             </div>
