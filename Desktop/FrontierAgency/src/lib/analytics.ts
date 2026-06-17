@@ -1,7 +1,7 @@
 // Frontier Agency — Client-side analytics tracker
 // Lightweight, privacy-friendly, no third-party cookies
 
-const ANALYTICS_ENDPOINT = "https://admin.frontieragency.gstudios.dev/api/analytics/track";
+const ANALYTIC_ENDPOINT = "/api/analytics/track";
 const BATCH_INTERVAL = 5000; // Flush every 5s
 const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
@@ -203,11 +203,11 @@ async function flushEvents(): Promise<void> {
   eventQueue = [];
   try {
     const blob = new Blob([JSON.stringify(batch)], { type: "application/json" });
-    navigator.sendBeacon(ANALYTICS_ENDPOINT, blob);
+    navigator.sendBeacon(ANALYTIC_ENDPOINT, blob);
   } catch {
     // Fallback to fetch
     try {
-      await fetch(ANALYTICS_ENDPOINT, {
+      await fetch(ANALYTIC_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(batch),

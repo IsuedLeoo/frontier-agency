@@ -40,20 +40,10 @@ export async function POST(request: NextRequest) {
         await analyticsQueries.insertEvent
           .bind(
             id,
+            event.sessionId || null,
+            event.pagePath || "/",
             event.type,
             event.eventName || null,
-            event.pagePath || null,
-            event.pageTitle || null,
-            event.referrer || null,
-            event.fingerprint || null,
-            event.sessionId || null,
-            event.utmSource || null,
-            event.utmMedium || null,
-            event.utmCampaign || null,
-            event.utmTerm || null,
-            event.utmContent || null,
-            event.duration ?? null,
-            event.scrollDepth ?? null,
             event.eventData ? JSON.stringify(event.eventData) : "{}",
             now
           )

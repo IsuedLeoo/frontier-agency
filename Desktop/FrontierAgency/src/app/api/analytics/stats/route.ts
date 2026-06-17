@@ -9,22 +9,21 @@ export async function GET(request: NextRequest) {
     const range = searchParams.get("range") || "30";
     const days = `-${range} days`;
 
-    const [pageviewsByDay, topPages, uniqueVisitors, eventCounts, totalEvents, recentEvents] = await Promise.all([
-      analyticsQueries.getPageviewsByDay.bind(days).all(),
-      analyticsQueries.getTopPages.bind(days).all(),
-      analyticsQueries.getUniqueVisitorsByDay.bind(days).all(),
+    const [eventCountsRes, totalEventsRes, recentEventsRes] = await Promise.all([
       analyticsQueries.getEventCountsByType.bind(days).all(),
       analyticsQueries.getTotalEvents.bind(days).first(),
       analyticsQueries.getRecentEvents.bind(50).all(),
     ]);
 
+    // Unwrap D1 response format { results: [...] }
+    const eventCounts = (eventCountsRes as { results?: unknown[] })?.results ?? eventCountsRes;
+    const recentEvents = (recentEventsRes as { results?: unknown[] })?.results ?? recentEventsRes;
+    const totalEvents = (totalEventsRes as { total: number } | null)?.total || 0;
+
     return NextResponse.json({
       ok: true,
       range: parseInt(range, 10),
-      totalEvents: (totalEvents as { total: number } | null)?.total || 0,
-      pageviewsByDay,
-      topPages,
-      uniqueVisitors,
+      totalEvents,
       eventCounts,
       recentEvents,
     });

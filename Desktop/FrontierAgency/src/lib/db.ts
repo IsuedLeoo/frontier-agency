@@ -81,17 +81,11 @@ const dbQueries = {
   activityLogFindByProjectId:
     "SELECT * FROM activity_log WHERE project_id = ? ORDER BY created_at DESC LIMIT 50",
 
-  // Analytics queries
+  // Analytics queries — D1 schema: id, session_id, page_path, event_type, event_name, event_data, created_at
   analyticsInsertEvent:
-    "INSERT INTO analytics_events (id, event_type, event_name, page_path, page_title, referrer, fingerprint, session_id, utm_source, utm_medium, utm_campaign, utm_term, utm_content, duration, scroll_depth, event_data, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO analytics_events (id, session_id, page_path, event_type, event_name, event_data, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
   analyticsGetRecentEvents:
     "SELECT * FROM analytics_events ORDER BY created_at DESC LIMIT ?",
-  analyticsGetPageviewsByDay:
-    "SELECT date(created_at) as day, COUNT(*) as views FROM analytics_events WHERE event_type = 'pageview' AND created_at >= datetime('now', ?) GROUP BY date(created_at) ORDER BY day ASC",
-  analyticsGetTopPages:
-    "SELECT page_path, COUNT(*) as views FROM analytics_events WHERE event_type = 'pageview' AND created_at >= datetime('now', ?) GROUP BY page_path ORDER BY views DESC LIMIT 10",
-  analyticsGetUniqueVisitorsByDay:
-    "SELECT date(created_at) as day, COUNT(DISTINCT fingerprint) as visitors FROM analytics_events WHERE created_at >= datetime('now', ?) GROUP BY date(created_at) ORDER BY day ASC",
   analyticsGetEventCountsByType:
     "SELECT event_type, COUNT(*) as count FROM analytics_events WHERE created_at >= datetime('now', ?) GROUP BY event_type ORDER BY count DESC",
   analyticsGetTotalEvents:
@@ -126,15 +120,17 @@ export class D1Database {
           run: () => {
             return stmt.bind(...params).run();
           },
-          all: () => {
-            return stmt.bind(...params).all();
+          all: async () => {
+            const res = await stmt.bind(...params).all();
+            return (res as { results?: unknown[] })?.results ?? res;
           },
-          first: () => {
-            const result = stmt.bind(...params).first();
+          first: async () => {
+            const result = await stmt.bind(...params).first();
             return result;
           },
-          get: () => {
-            return stmt.bind(...params).first();
+          get: async () => {
+            const result = await stmt.bind(...params).first();
+            return result;
           },
           raw: () => {
             return stmt.bind(...params).raw();
@@ -226,129 +222,9 @@ export class D1Database {
   analyticsQueries = {
     insertEvent: this.prepare(dbQueries.analyticsInsertEvent),
     getRecentEvents: this.prepare(dbQueries.analyticsGetRecentEvents),
-    getPageviewsByDay: this.prepare(dbQueries.analyticsGetPageviewsByDay),
-    getTopPages: this.prepare(dbQueries.analyticsGetTopPages),
-    getUniqueVisitorsByDay: this.prepare(dbQueries.analyticsGetUniqueVisitorsByDay),
     getEventCountsByType: this.prepare(dbQueries.analyticsGetEventCountsByType),
     getTotalEvents: this.prepare(dbQueries.analyticsGetTotalEvents),
   };
-}
-
-// Initialize database - this will be called from middleware or API routes
-export function initializeD1(db: CF_D1Database) {
-  const database = new D1Database(db);
-
-  // Create tables if they don't exist (run schema)
-  const schema = `
-    CREATE TABLE IF NOT EXISTS users (
-      id TEXT PRIMARY KEY,
-      email TEXT UNIQUE NOT NULL,
-      password_hash TEXT NOT NULL,
-      name TEXT NOT NULL,
-      role TEXT NOT NULL DEFAULT 'user',
-      created_at TEXT NOT NULL
-    );
-
-    CREATE TABLE IF NOT EXISTS sessions (
-      id TEXT PRIMARY KEY,
-      user_id TEXT NOT NULL,
-      expires_at TEXT NOT NULL,
-      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE IF NOT EXISTS projects (
-      id TEXT PRIMARY KEY,
-      user_id TEXT NOT NULL,
-      name TEXT NOT NULL,
-      description TEXT NOT NULL,
-      status TEXT NOT NULL DEFAULT 'discovery',
-      created_at TEXT NOT NULL,
-      updated_at TEXT NOT NULL,
-      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE IF NOT EXISTS project_services (
-      id TEXT PRIMARY KEY,
-      project_id TEXT NOT NULL,
-      service_name TEXT NOT NULL,
-      service_slug TEXT NOT NULL,
-      status TEXT NOT NULL DEFAULT 'pending',
-      config TEXT DEFAULT '{}',
-      created_at TEXT NOT NULL,
-      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE IF NOT EXISTS activity_log (
-      id TEXT PRIMARY KEY,
-      project_id TEXT NOT NULL,
-      user_id TEXT NOT NULL,
-      action TEXT NOT NULL,
-      details TEXT,
-      created_at TEXT NOT NULL,
-      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
-      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE IF NOT EXISTS integrations (
-      id TEXT PRIMARY KEY,
-      user_id TEXT NOT NULL,
-      project_id TEXT,
-      provider TEXT NOT NULL,
-      access_token TEXT,
-      refresh_token TEXT,
-      webhook_url TEXT,
-      config TEXT DEFAULT '{}',
-      status TEXT NOT NULL DEFAULT 'active',
-      created_at TEXT NOT NULL,
-      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE IF NOT EXISTS analytics_events (
-      id TEXT PRIMARY KEY,
-      event_type TEXT NOT NULL,
-      event_name TEXT,
-      page_path TEXT,
-      page_title TEXT,
-      referrer TEXT,
-      fingerprint TEXT,
-      session_id TEXT,
-      utm_source TEXT,
-      utm_medium TEXT,
-      utm_campaign TEXT,
-      utm_term TEXT,
-      utm_content TEXT,
-      duration REAL,
-      scroll_depth INTEGER,
-      event_data TEXT DEFAULT '{}',
-      created_at TEXT NOT NULL
-    );
-
-    -- Migration: add role column if it doesn't exist (safe no-op on fresh DB)
-    ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user';
-
-    -- Indexes
-    CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
-    CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id);
-    CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at);
-    CREATE INDEX IF NOT EXISTS idx_projects_user_id ON projects(user_id);
-    CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
-    CREATE INDEX IF NOT EXISTS idx_project_services_project_id ON project_services(project_id);
-    CREATE INDEX IF NOT EXISTS idx_project_services_status ON project_services(status);
-    CREATE INDEX IF NOT EXISTS idx_activity_log_project_id ON activity_log(project_id);
-    CREATE INDEX IF NOT EXISTS idx_activity_log_created_at ON activity_log(created_at);
-    CREATE INDEX IF NOT EXISTS idx_integrations_user_id ON integrations(user_id);
-    CREATE INDEX IF NOT EXISTS idx_integrations_project_id ON integrations(project_id);
-    CREATE INDEX IF NOT EXISTS idx_integrations_provider ON integrations(provider);
-    CREATE INDEX IF NOT EXISTS idx_analytics_event_type ON analytics_events(event_type);
-    CREATE INDEX IF NOT EXISTS idx_analytics_created_at ON analytics_events(created_at);
-    CREATE INDEX IF NOT EXISTS idx_analytics_fingerprint ON analytics_events(fingerprint);
-    CREATE INDEX IF NOT EXISTS idx_analytics_session_id ON analytics_events(session_id);
-  `;
-
-  database.exec(schema);
-
-  return database;
 }
 
 // Convenience: get DB queries with the D1 binding resolved automatically
