@@ -19,7 +19,7 @@ export default function CTA() {
       </p>
       <div className="reveal flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
         <a
-          href="#"
+          href="/contact"
           data-cta="schedule-call"
           className="inline-block px-8 py-4 bg-white text-black text-xs font-semibold uppercase tracking-[0.04em] border border-white hover:bg-transparent hover:text-white transition-all duration-300"
         >
