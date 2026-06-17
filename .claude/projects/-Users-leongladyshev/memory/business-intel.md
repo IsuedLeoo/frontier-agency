@@ -114,14 +114,13 @@
 | SapientPro | $40/hr, min $1K | $1,000 | ❌ | ✅ |
 | Azumo | $55/hr, min $50K | $50,000 | ❌ | ❌ |
 | Probey Services | $50/hr, min <$1K | <$1,000 | ❌ | ✅ |
-| **Frontier Agency** | **$2,000-$50,000** | **$2,000** | **✅** | **✅** |
+| **Frontier Agency** | **Custom quotes** | **Contact for estimate** | **✅** | **✅** |
 
 **Our Competitive Advantages**:
-1. Competitive entry price ($2,000 vs $7.5K+ from most Miami competitors)
+1. No public pricing — all quotes are custom after consultation (positions as premium)
 2. Miami-local presence (most competitors are remote/generic)
-3. Transparent pricing (most competitors hide it)
-4. Custom-scoped (no forced packages)
-5. Bilingual capability (critical for Miami market)
+3. Custom-scoped (no forced packages, no subscriptions)
+4. Bilingual capability (critical for Miami market)
 
 ## Strategic Recommendations
 
@@ -139,12 +138,12 @@
 4. **SEO basics** — meta descriptions, OG tags, blog content
 5. **Local networking** — Miami Startup Pitch Meetup (was tonight, may have missed)
 
-### Pricing Validation
-Market data supports our pricing tiers (updated June 17 — raised floor from $250 to $2,000):
-- AI receptionist market: $29-$199/month from competitors → our $2,000-$5,000 Starter tier is positioned as premium custom work
-- SMBs willing to invest $40K-$80K/year → our Growth tier ($5K-$15K) is a strong fit
-- Human receptionist costs $33K+/year → even our Starter tier is 90%+ cheaper than hiring
-- Most projects are expected to fall between $5,000-$15,000 (Growth tier)
+### Pricing Strategy (Updated June 17)
+**No public pricing.** All quotes are custom after consultation. This positions Frontier as a premium, bespoke service.
+- AI receptionist market: $29-$199/month from competitors → we position as premium custom work
+- SMBs willing to invest $40K-$80K/year → our typical project range fits this budget
+- Human receptionist costs $33K+/year → our automation is significantly cheaper than hiring
+- Quotes are provided within 48 hours of initial consultation
 
 ## Risk Factors
 1. **No domain** — frontieragency.com belongs to an Iowa insurance company

@@ -9,24 +9,29 @@ interface FaqItem {
 
 const faqs: FaqItem[] = [
   {
-    question: "What exactly is a personalized AI agency?",
+    question: "What exactly do you build?",
     answer:
-      "We build custom AI systems tailored to your business operations. Think of it as an AI operations team designed specifically for how you work — handling tasks, managing workflows, and making decisions autonomously across your organization.",
+      "We build custom AI automation systems tailored to your business operations. That could be an automated receptionist, a lead follow-up system, an invoicing workflow, or any repetitive task you want off your plate. Whatever you need, we scope and build it.",
+  },
+  {
+    question: "How does pricing work?",
+    answer:
+      "Every project is different. We learn what you need, then provide a custom estimate. No subscriptions, no packages — you pay for the work scoped to your business. Reach out and we'll put together a quote based on your specific situation.",
   },
   {
     question: "How long does it take to build?",
     answer:
-      "Most engagements launch in 2-4 weeks. Complex, enterprise-grade systems may take 6-8 weeks. We deliver incrementally so you see value from day one.",
+      "Most projects launch in 2-4 weeks. Complex systems may take 6-8 weeks. We deliver incrementally so you see value from day one.",
   },
   {
-    question: "Is this just another chatbot?",
+    question: "Is this just a chatbot?",
     answer:
-      "No. We build multi-agent systems that execute real tasks across your software stack — not just conversation. Your agency manages workflows, makes decisions, and takes action autonomously.",
+      "No. We build automation that executes real tasks across your software stack — not just conversation. Your systems manage workflows, make decisions, and take action autonomously.",
   },
   {
     question: "What if our needs change?",
     answer:
-      "Every engagement includes ongoing support and iteration. Your AI agency evolves with your business. We tune, expand, and optimize continuously.",
+      "Every engagement includes ongoing support and iteration. Your systems evolve with your business. We tune, expand, and optimize continuously.",
   },
   {
     question: "What tools and platforms do you integrate with?",
@@ -34,7 +39,7 @@ const faqs: FaqItem[] = [
       "We work with everything: CRMs, ERPs, communication tools, databases, custom software, APIs — if your business uses it, we integrate with it.",
   },
   {
-    question: "Who owns the AI systems you build?",
+    question: "Who owns the systems you build?",
     answer:
       "You do. All custom-built systems are yours. IP, configurations, and data remain under your control at all times.",
   },

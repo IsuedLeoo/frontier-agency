@@ -12,7 +12,7 @@
 **Strengths:**
 - Clean, modern design with clear value proposition
 - Well-structured services section (7 domains)
-- Clear pricing tiers (Starter $2K-5K / Growth $5K-15K / Scale $15K-50K)
+- No public pricing — custom quotes only after consultation
 - Good use of social proof stats (50+ projects, 98% retention, 10x ROI)
 - FAQ section addresses common objections
 - Strong CTA placement throughout
