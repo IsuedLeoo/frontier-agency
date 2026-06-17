@@ -12,44 +12,48 @@ interface Tier {
 const tiers: Tier[] = [
   {
     name: "Starter",
-    priceRange: "$1,500 – $5,000",
-    exampleNote: "Example: a single-agent automation for email triage and scheduling.",
-    note: "Best for small businesses and solo founders getting started with AI automation.",
+    priceRange: "$2,000 – $5,000",
+    exampleNote: "Example: an automated receptionist that answers your phones, takes messages, and books appointments — 24/7.",
+    note: "Perfect for solo founders and small businesses that want to stop missing calls and start looking bigger than they are.",
     features: [
-      "Single-domain automation",
-      "Up to 3 tool integrations",
-      "Dedicated AI agent team",
-      "30 days of operation support",
-      "Performance reporting",
+      "One automated system handling one job (phones, email, scheduling, or chat)",
+      "Answers your calls within 3 rings — even at 2am on a Sunday",
+      "Books appointments directly into your calendar without you lifting a finger",
+      "Sends you a daily text summary of everything that happened",
+      "Connects to 2 of your existing tools (Google Calendar, Gmail, etc.)",
+      "You get a real human to call if anything weird comes up",
     ],
   },
   {
     name: "Growth",
-    priceRange: "$5,000 – $25,000",
-    exampleNote: "Example: multi-agent system handling CRM, support tickets, and reporting.",
-    note: "For scaling companies ready to automate core operations across departments.",
+    priceRange: "$5,000 – $15,000",
+    exampleNote: "Example: automated systems handle your front desk, follow up with every lead, and chase unpaid invoices — all at the same time.",
+    note: "For businesses ready to stop doing repetitive work by hand and start scaling without hiring.",
     features: [
-      "Multi-domain automation",
-      "Unlimited integrations",
-      "Multi-agent system architecture",
-      "90 days of operation support",
-      "Workflow analytics dashboard",
-      "Quarterly strategy reviews",
+      "Multiple automated systems working together (phones + email + CRM + scheduling)",
+      "Every new lead gets called back within 5 minutes — day or night",
+      "Unpaid invoices get polite but firm reminders sent automatically",
+      "Your calendar fills itself — no more 'does Tuesday work?' email chains",
+      "Connects to 5+ tools (CRM, calendar, email, payment processor, etc.)",
+      "Weekly report showing exactly how many hours you got back",
+      "One monthly 30-minute call with our team to tweak and improve",
     ],
     highlight: true,
   },
   {
-    name: "Enterprise",
-    priceRange: "$25,000 – $100,000+",
-    exampleNote: "Example: full AI operations team replacing 10+ manual workflows.",
-    note: "For organizations that need a fully custom AI operations team at scale.",
+    name: "Scale",
+    priceRange: "$15,000 – $50,000",
+    exampleNote: "Example: full AI operations — receptionist, sales follow-up, invoicing, customer check-ins, and reporting — all running 24/7.",
+    note: "For companies that want an entire AI department for less than the cost of one employee.",
     features: [
-      "Full-scope operations takeover",
-      "Custom agent development",
-      "Dedicated success engineer",
-      "12 months of continuous optimization",
-      "SLA guarantees",
-      "On-premise deployment option",
+      "Comprehensive automation across your phones, email, sales, billing, and customer success",
+      "Leads get called in under 5 minutes, followed up for 30 days, and handed to you when they're ready to buy",
+      "Invoices go out on time, overdue payments get chased, and your books stay clean",
+      "Customers get checked on automatically — problems get caught before they cancel",
+      "Connects to every tool you use (unlimited integrations)",
+      "Real-time dashboard showing calls answered, leads contacted, invoices sent, and money collected",
+      "Dedicated account manager who knows your business and proactively finds new ways to save you time",
+      "Same-day support — if something breaks, we fix it today, not tomorrow",
     ],
   },
 ];
@@ -61,23 +65,23 @@ export default function Pricing() {
         className="reveal text-xs font-medium uppercase tracking-[0.2em] text-[#888888] mb-8"
         style={{ fontFamily: "var(--font-inter)" }}
       >
-        Engagement
+        Pricing
       </p>
       <h2
         className="reveal text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-4 sm:mb-6"
         style={{ fontFamily: "var(--font-space-grotesk)" }}
       >
-        Built for
+        Custom AI automation.
         <br />
-        your scale.
+        Starting at $2,000.
       </h2>
       <p
         className="reveal text-sm sm:text-base md:text-lg font-light text-[#888888] max-w-[600px] leading-relaxed mx-auto mb-8 sm:mb-12 md:mb-16"
         style={{ fontFamily: "var(--font-inter)" }}
       >
-        Every engagement is priced around the scope of work. The ranges below
-        are examples — your final price is always negotiated based on your
-        specific needs.
+        Every project is scoped to your needs. These ranges reflect what
+        most businesses invest — we provide a custom estimate after
+        understanding what you actually need.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#333333] border border-[#333333] max-w-[1200px] mx-auto text-left">
@@ -145,9 +149,9 @@ export default function Pricing() {
         className="reveal text-xs text-[#555555] mt-8 sm:mt-10 max-w-[500px] mx-auto leading-relaxed"
         style={{ fontFamily: "var(--font-inter)" }}
       >
-        All prices are example ranges. Your final cost depends on the services
-        you need, the complexity of your workflows, and the level of support
-        required. Call us and we&apos;ll scope it together.
+        All prices are project estimates based on scope. We&apos;ll build a custom
+        plan if none of these fit — <a href="/contact" className="underline underline-offset-2 hover:text-white transition-colors">call us</a> and
+        we&apos;ll figure it out in 15 minutes. Most projects fall between $5,000 and $15,000.
       </p>
     </section>
   );
