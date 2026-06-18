@@ -20,7 +20,7 @@ export default function Hero() {
             className="reveal text-sm sm:text-base md:text-lg font-light text-[#888888] max-w-[600px] leading-relaxed mb-8 sm:mb-10 md:mb-12 mx-auto lg:mx-0"
             style={{ fontFamily: "var(--font-inter)" }}
           >
-            We design, build, and deploy custom AI agencies for businesses of
+            We design, build, and deploy custom AI automation for businesses of
             every size. From solo founders to Fortune 500s — your operations,
             automated.
           </p>
@@ -64,7 +64,7 @@ export default function Hero() {
         <div className="reveal flex-1 flex justify-center lg:justify-end">
           <img
             src="/herobuilding.png"
-            alt="AI Agency Hero"
+            alt="AI Automation Hero"
             className="w-full max-w-[500px] lg:max-w-[600px] h-auto object-contain"
           />
         </div>

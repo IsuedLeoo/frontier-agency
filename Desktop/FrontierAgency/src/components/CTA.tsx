@@ -7,9 +7,9 @@ export default function CTA() {
         className="reveal text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-none mb-4 sm:mb-6 md:mb-8"
         style={{ fontFamily: "var(--font-space-grotesk)" }}
       >
-        Ready to build
+        Ready to automate
         <br />
-        your AI agency.
+        your business.
       </h2>
       <p
         className="reveal text-sm sm:text-base md:text-lg font-light text-[#888888] max-w-[500px] leading-relaxed mx-auto mb-6 sm:mb-8 md:mb-12"

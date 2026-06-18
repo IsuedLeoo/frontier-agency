@@ -11,7 +11,7 @@ export default function Contact() {
       <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
 
       <p className="mb-6">
-        We’d love to hear from you! Whether you have a question about our AI agency platform, need technical support, or want to discuss a partnership, feel free to reach out through any of the channels below.
+        We’d love to hear from you! Whether you have a question about our AI automation services, need technical support, or want to discuss a partnership, feel free to reach out through any of the channels below.
       </p>
 
       {/* Contact Details */}

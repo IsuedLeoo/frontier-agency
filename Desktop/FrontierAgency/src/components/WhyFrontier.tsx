@@ -3,19 +3,19 @@
 const differentiators = [
   {
     title: "Purpose-Built, Not Off-the-Shelf",
-    desc: "Every AI agency we build is designed around your specific operations. No generic agents. No one-size-fits-all. Your systems understand your business before they take action.",
-  },
-  {
-    title: "Multi-Agent Architecture",
-    desc: "We do not build chatbots. We build teams of AI agents that collaborate, delegate, and execute complex workflows across your entire organization autonomously.",
+    desc: "Every AI system we build is designed around your specific operations. No generic solutions. No one-size-fits-all. Your automation understands your business before it takes action.",
   },
   {
     title: "Integrated, Not Isolated",
-    desc: "Your AI agency connects to the tools you already use — CRMs, ERPs, communication platforms, databases, custom software. It works within your stack, not outside it.",
+    desc: "Your AI systems connect to the tools you already use — CRMs, ERPs, communication platforms, databases, custom software. Everything works within your stack, not outside it.",
+  },
+  {
+    title: "Custom-Scoped to Your Needs",
+    desc: "We don't sell packages. We learn what you need, provide an estimate, and build exactly that. If you need one automated workflow, we build one. If you need twenty, we build twenty.",
   },
   {
     title: "Operate and Scale",
-    desc: "We do not disappear after launch. Your AI agency is monitored, tuned, and expanded continuously as your business evolves. Operations that improve every week.",
+    desc: "We don't disappear after launch. Your AI systems are monitored, tuned, and expanded continuously as your business evolves. Operations that improve every week.",
   },
 ];
 

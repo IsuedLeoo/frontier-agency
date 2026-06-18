@@ -10,22 +10,22 @@ const steps: Step[] = [
   {
     number: "01",
     title: "Discovery",
-    desc: "We learn your operations, identify automation opportunities, and define the scope of your AI agency.",
+    desc: "We learn your operations, identify automation opportunities, and define the scope of your project.",
   },
   {
     number: "02",
-    title: "Design",
-    desc: "We architect your custom AI agency — systems, workflows, and integrations tailored to your business.",
+    title: "Estimate & Scope",
+    desc: "We provide a custom estimate based on what you actually need. No packages, no tiers — just a clear scope and price.",
   },
   {
     number: "03",
     title: "Build & Deploy",
-    desc: "We build your AI agents, integrate them into your stack, and test everything end-to-end.",
+    desc: "We build your AI automation, integrate it into your stack, and test everything end-to-end.",
   },
   {
     number: "04",
     title: "Operate & Scale",
-    desc: "Your AI agency runs daily. We monitor, optimize, and scale as your business grows.",
+    desc: "Your systems run daily. We monitor, optimize, and scale as your business grows.",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function HowItWorks() {
         >
           How we build
           <br />
-          your AI agency.
+          your automation.
         </h2>
         <p className="reveal text-sm sm:text-base md:text-lg font-light text-[#333333] max-w-[600px] leading-relaxed">
           A proven engagement model. From first conversation to fully

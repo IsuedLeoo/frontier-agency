@@ -70,9 +70,9 @@ export default function ServicesPage() {
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-4 sm:mb-6"
           style={{ fontFamily: "var(--font-space-grotesk)" }}
         >
-          Everything your AI agency
+          Everything we can
           <br />
-          can handle.
+          automate for you.
         </h1>
         <p
           className="text-sm sm:text-base md:text-lg font-light text-[#888888] max-w-[600px] leading-relaxed mx-auto mb-8"
@@ -201,7 +201,7 @@ export default function ServicesPage() {
           style={{ fontFamily: "var(--font-inter)" }}
         >
           This is a starting point. Every engagement is fully custom — we build
-          AI systems for whatever your business requires.
+          automation for whatever your business requires.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
           <Link

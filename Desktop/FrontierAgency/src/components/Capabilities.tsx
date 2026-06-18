@@ -27,7 +27,7 @@ const services: Service[] = [
   {
     icon: <Calendar size={24} strokeWidth={1.5} />,
     title: "Scheduling & Bookings",
-    desc: "Calendar management, appointments, and booking agents working around the clock.",
+    desc: "Calendar management, appointments, and booking systems working around the clock.",
   },
   {
     icon: <Target size={24} strokeWidth={1.5} />,
@@ -89,9 +89,9 @@ export default function Capabilities() {
       <div className="max-w-[1400px] mx-auto">
         <SectionLabel>Services</SectionLabel>
         <SectionTitle>
-          What your AI agency
+          What we automate
           <br />
-          handles.
+          for your business.
         </SectionTitle>
         <SectionDesc>
           Every engagement is custom. These are the domains we routinely
