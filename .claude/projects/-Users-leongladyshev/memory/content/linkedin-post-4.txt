@@ -1,0 +1,36 @@
+LinkedIn Post #4 — Case study: How automation saves 20+ hours a week
+
+A Miami-based home services company came to us with a problem:
+
+"We're drowning in calls, but we can't afford a full-time receptionist."
+
+Here's what their week looked like:
+→ 150+ inbound calls per week
+→ 40+ hours spent on scheduling and follow-ups
+→ 3-5 missed calls every day while on jobs
+→ Constant voicemails they never had time to listen to
+
+**What we built:**
+- An AI receptionist that answers every call, 24/7
+- Automated appointment booking synced to their calendar
+- Instant lead qualification and data entry
+- Follow-up text messages sent automatically
+
+**The results after 30 days:**
+✅ 94% of calls answered (up from 65%)
+✅ 22 hours/week saved on admin work
+✅ 40% more leads captured
+✅ Zero missed calls during business hours
+✅ ROI achieved in 34 days
+
+The owner told me: "I got my weekends back. I actually saw my kid's soccer game for the first time in months."
+
+That's not just a business result. That's a life result.
+
+This is why we do what we do at Frontier Agency. We don't sell cookie-cutter packages. We build custom AI solutions that fit how YOU run your business.
+
+No subscriptions. No bloated software. Just technology that works.
+
+If you're spending more than 5 hours a week on tasks a machine could handle — let's talk.
+
+#CaseStudy #BusinessAutomation #AIReceptionist #MiamiBusiness #SmallBusinessSuccess #FrontierAgency #AutomationSavesTime

@@ -39,6 +39,16 @@ Every engagement starts with a discovery call to understand what would have the 
 | Ariete | (305) 396-5105 | Restaurant (Coconut Grove) | CONTACTED | Popular brunch spot, high volume. Likely needs: waitlist management, customer communication, review monitoring. Email sent to info@arietemiami.com 2026-06-17. | 2026-06-17 |
 | Stubborn Seed | (305) 329-2344 | Restaurant (South Beach) | CONTACTED | Chef-driven, popular. Likely needs: reservation automation, VIP customer management, event booking. Email sent to info@stubbornseedmiami.com 2026-06-17. | 2026-06-17 |
 | Yelp Lead (33160) | Unknown | Unknown | DISMISSED | Was a test/lead from owner. Not a real prospect. | 2026-06-17 |
+| Douglas Elliman Real Estate | (305) 677-5000 | Real Estate Agency (Miami) | NEW | One of the largest luxury real estate brokerages in Miami with 2 local offices (5555 Biscayne Blvd & 3059 Grand Ave). High volume of buyer/seller inquiries. Likely needs: lead intake automation, follow-up sequences, appointment scheduling, client nurturing. | 2026-06-18 |
+| One Sotheby's International Realty | (305) 999-1900 | Real Estate Agency (Miami) | NEW | Major luxury real estate brand in Miami, high transaction volume. Likely needs: lead capture from property inquiries, automated follow-up, showing scheduling, CRM automation. | 2026-06-18 |
+| Blush Boutique | (786) 255-2288 | Retail Store (Pinecrest) | NEW | Women's clothing boutique in Pinecrest, popular local shop. Likely needs: customer inquiry handling, inventory notifications, appointment booking for personal styling, review automation. | 2026-06-18 |
+| Julian Chang Boutique | (786) 701-9993 | Retail Store (Pinecrest) | NEW | Upscale boutique in Pinecrest with apparel and accessories. Likely needs: customer service automation, appointment scheduling, VIP client management, marketing automation. | 2026-06-18 |
+| Indigo Republic Boutique | (786) 581-9328 | Retail Store (Pinecrest) | NEW | Boutique in Pinecrest offering apparel, accessories, and permanent jewelry. Likely needs: booking automation for jewelry services, customer follow-up, social media automation, review generation. | 2026-06-18 |
+| Ocean Plumbing and Air | (786) 751-6364 | Home Services - Plumbing/HVAC (Miami) | NEW | Family-owned plumbing and HVAC company serving Miami. Likely needs: emergency call handling, appointment scheduling, service reminders, review automation, dispatch coordination. | 2026-06-18 |
+| Sunny Bliss Plumbing & Air | (305) 504-6091 | Home Services - Plumbing/HVAC (Miami) | NEW | Established Miami plumber & AC repair company since 1990, serves Miami-Dade and Broward. Likely needs: booking automation, emergency call triage, maintenance reminders, review follow-up. | 2026-06-18 |
+| Art Plumbing, Air Conditioning & Electric | (954) 752-1282 | Home Services - Plumbing/HVAC/Electrical (Miami-Dade) | NEW | Full-service home services company covering plumbing, HVAC, and electrical. Likely needs: multi-service booking, emergency dispatch, customer follow-up, estimate scheduling. | 2026-06-18 |
+| Miami Loves Green Landscaping | (786) 570-3215 | Home Services - Landscaping (Miami) | NEW | Professional landscaping company offering design, hardscaping, and maintenance. Likely needs: estimate requests, project follow-up, seasonal maintenance reminders, review automation. | 2026-06-18 |
+| Superior Landscaping & Lawn | (305) 634-0717 | Home Services - Landscaping (Miami) | NEW | Landscaping and lawn care company with design, installation, and maintenance services. Likely needs: quote automation, scheduling, seasonal reminders, customer communication. | 2026-06-18 |
 
 ## Nurture Queue
 
@@ -60,6 +70,23 @@ Every engagement starts with a discovery call to understand what would have the 
 | 2026-06-17 12:33 | Ariete | Analyst | Email sent | — | Via gog to info@arietemiami.com |
 | 2026-06-17 12:33 | Salon Dahlia | Analyst | Email sent | — | Via gog to info@salondahlia.com |
 | 2026-06-17 12:34 | Salon Ethos | Analyst | Email sent | — | Via gog to info@salonethos.com |
+| 2026-06-18 09:00 | Douglas Elliman Real Estate | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-18 09:00 | One Sotheby's International Realty | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-18 09:00 | Blush Boutique | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-18 09:00 | Julian Chang Boutique | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-18 09:00 | Indigo Republic Boutique | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-18 09:00 | Ocean Plumbing and Air | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-18 09:00 | Sunny Bliss Plumbing & Air | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-18 09:00 | Art Plumbing, Air Conditioning & Electric | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-18 09:00 | Miami Loves Green Landscaping | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-18 09:00 | Superior Landscaping & Lawn | Sales Agent | Identified | — | Added to pipeline as NEW |
+
+## Pipeline Summary (Day 2 — June 18, 2026)
+- **Total leads**: 20 (10 from Day 1 + 10 from Day 2)
+- **CONTACTED**: 10 (Day 1 leads, emailed June 17)
+- **NEW**: 10 (Day 2 leads, identified June 18 — outreach pending)
+- **Responses**: 0
+- **Industries**: Restaurants 25%, Home Services 25%, Retail 15%, Real Estate 10%, Law Firms 10%, Salons 10%, Auto 5%
 
 ## Notes
 - Working URLs: frontieragency.gstudios.dev (main), admin.frontieragency.gstudios.dev (admin)

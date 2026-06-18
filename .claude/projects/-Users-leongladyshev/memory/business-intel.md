@@ -145,8 +145,31 @@
 - Human receptionist costs $33K+/year → our automation is significantly cheaper than hiring
 - Quotes are provided within 48 hours of initial consultation
 
+## Domain Research (Updated June 18, 2026)
+
+**Situation**: frontieragency.com is owned by Frontier Insurance & Realty in Iowa. We need a new domain.
+
+**Available domains identified** (7 of 10 checked):
+- frontier.agency — AVAILABLE (~$3.63-24/yr) — **RECOMMENDED PRIMARY**
+- frontieragency.ai — AVAILABLE (~$80-94/yr) — secondary option
+- frontieragencymiami.com — AVAILABLE (~$10-12/yr)
+- frontieragency-miami.com — AVAILABLE (~$10-12/yr)
+- gofrontieragency.com — AVAILABLE (~$10-12/yr)
+- frontieragencyfl.com — AVAILABLE (~$10-12/yr)
+- miami-frontier-agency.com — AVAILABLE (~$10-12/yr)
+
+**Taken domains**: frontieragency.co (registered May 2026), frontieragency.io (registered 2021), frontierdigitalagency.com (registered 2017, expires Aug 2026)
+
+**Top recommendation**: frontier.agency at Cloudflare (~$24/yr at cost). Perfect semantic match — [brand].[business type]. Modern, short, memorable.
+
+**Alternative**: frontieragency.ai (~$80/yr) if positioning as premium AI-first brand.
+
+**Suggested registrar**: Cloudflare Registrar (at-cost pricing, free WHOIS privacy, fast DNS).
+
+**Full research**: See [domain-research.md](domain-research.md)
+
 ## Risk Factors
-1. **No domain** — frontieragency.com belongs to an Iowa insurance company
+1. **No domain registered yet** — frontieragency.com belongs to an Iowa insurance company. 7 alternatives identified, frontier.agency recommended. Decision and registration needed.
 2. **No social media presence** — competitors have LinkedIn/Instagram, we have nothing
 3. **No testimonials/case studies** — need first client urgently for social proof
 4. **Phone number** — (986) area code is not local Miami (should be 305/786)
