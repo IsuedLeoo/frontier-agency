@@ -34,13 +34,13 @@ Every engagement starts with a discovery call to understand what would have the 
 | Green's Garage | (305) 575-2389 | Auto Repair (Miami) | CONTACTED | Family-owned since 1957, 828 reviews, luxury brands. Likely needs: appointment scheduling, customer follow-up, service reminders, review automation. Email sent 2026-06-17. | 2026-06-17 |
 | Salon Dahlia | (305) 751-9664 | Hair Salon (Miami) | CONTACTED | Popular salon, 54 Yelp reviews. Likely needs: appointment booking, client reminders, rebooking automation, review generation. Email sent to info@salondahlia.com 2026-06-17. | 2026-06-17 |
 | Salon Ethos | (786) 574-9609 | Hair Salon (Midtown) | CONTACTED | Trendy Midtown salon, growth-stage. Likely needs: booking automation, marketing/social automation, client retention. Email sent to info@salonethos.com 2026-06-17. | 2026-06-17 |
-| Cueto Law Group | (305) 809-6061 | Law Firm (Miami) | CONTACTED | Business litigation. Likely needs: intake automation, client communication, document processing, scheduling. Email sent 2026-06-17. | 2026-06-17 |
-| Trembly Law Firm | (305) 437-6200 | Law Firm (Miami) | CONTACTED | Business law. Likely needs: lead intake, client onboarding, document automation, follow-up sequences. Email sent to info@tremblylaw.com 2026-06-17. | 2026-06-17 |
+| Cueto Law Group | (305) 809-6061 | Law Firm (Miami) | CONTACTED | Business litigation. Likely needs: intake automation, client communication, document processing, scheduling. Email sent 2026-06-17. Call failed (SIP error) 2026-06-19 — number may be invalid. | 2026-06-19 |
+| Trembly Law Firm | (305) 437-6200 | Law Firm (Miami) | CONTACTED | Business law. Likely needs: lead intake, client onboarding, document automation, follow-up sequences. Email sent to info@tremblylaw.com 2026-06-17. Called 2026-06-19, no answer. | 2026-06-19 |
 | Ariete | (305) 396-5105 | Restaurant (Coconut Grove) | CONTACTED | Popular brunch spot, high volume. Likely needs: waitlist management, customer communication, review monitoring. Email sent to info@arietemiami.com 2026-06-17. | 2026-06-17 |
 | Stubborn Seed | (305) 329-2344 | Restaurant (South Beach) | CONTACTED | Chef-driven, popular. Likely needs: reservation automation, VIP customer management, event booking. Email sent to info@stubbornseedmiami.com 2026-06-17. | 2026-06-17 |
 | Yelp Lead (33160) | Unknown | Unknown | DISMISSED | Was a test/lead from owner. Not a real prospect. | 2026-06-17 |
-| Douglas Elliman Real Estate | (305) 677-5000 | Real Estate Agency (Miami) | NEW | One of the largest luxury real estate brokerages in Miami with 2 local offices (5555 Biscayne Blvd & 3059 Grand Ave). High volume of buyer/seller inquiries. Likely needs: lead intake automation, follow-up sequences, appointment scheduling, client nurturing. | 2026-06-18 |
-| One Sotheby's International Realty | (305) 999-1900 | Real Estate Agency (Miami) | NEW | Major luxury real estate brand in Miami, high transaction volume. Likely needs: lead capture from property inquiries, automated follow-up, showing scheduling, CRM automation. | 2026-06-18 |
+| Douglas Elliman Real Estate | (305) 677-5000 | Real Estate Agency (Miami) | CONTACTED | One of the largest luxury real estate brokerages in Miami. Called 2026-06-19 — silence timeout (likely IVR/receptionist). Need to retry. | 2026-06-19 |
+| One Sotheby's International Realty | (305) 999-1900 | Real Estate Agency (Miami) | CONTACTED | Major luxury real estate brand in Miami. Called 2026-06-19 — hung up quickly. Need to retry with better hook. | 2026-06-19 |
 | Blush Boutique | (786) 255-2288 | Retail Store (Pinecrest) | NEW | Women's clothing boutique in Pinecrest, popular local shop. Likely needs: customer inquiry handling, inventory notifications, appointment booking for personal styling, review automation. | 2026-06-18 |
 | Julian Chang Boutique | (786) 701-9993 | Retail Store (Pinecrest) | NEW | Upscale boutique in Pinecrest with apparel and accessories. Likely needs: customer service automation, appointment scheduling, VIP client management, marketing automation. | 2026-06-18 |
 | Indigo Republic Boutique | (786) 581-9328 | Retail Store (Pinecrest) | NEW | Boutique in Pinecrest offering apparel, accessories, and permanent jewelry. Likely needs: booking automation for jewelry services, customer follow-up, social media automation, review generation. | 2026-06-18 |
@@ -80,11 +80,16 @@ Every engagement starts with a discovery call to understand what would have the 
 | 2026-06-18 09:00 | Art Plumbing, Air Conditioning & Electric | Sales Agent | Identified | — | Added to pipeline as NEW |
 | 2026-06-18 09:00 | Miami Loves Green Landscaping | Sales Agent | Identified | — | Added to pipeline as NEW |
 | 2026-06-18 09:00 | Superior Landscaping & Lawn | Sales Agent | Identified | — | Added to pipeline as NEW |
+| 2026-06-19 07:18 | Cueto Law Group | Vapi/Alex | FAILED | — | SIP outbound error — number may be invalid. Old Alex settings. |
+| 2026-06-19 07:20 | Trembly Law Firm | Vapi/Alex | NO_ANSWER | — | Rang, no answer. Old Alex settings. |
+| 2026-06-19 07:30 | Douglas Elliman Real Estate | Vapi/Alex | SILENCE_TIMEOUT | — | Connected but silence timed out (likely IVR/receptionist). Updated Alex. |
+| 2026-06-19 07:30 | One Sotheby's International Realty | Vapi/Alex | HUNG_UP | — | Connected but they hung up quickly. Updated Alex. |
 
-## Pipeline Summary (Day 2 — June 18, 2026)
+## Pipeline Summary (Day 3 — June 19, 2026)
 - **Total leads**: 20 (10 from Day 1 + 10 from Day 2)
-- **CONTACTED**: 10 (Day 1 leads, emailed June 17)
-- **NEW**: 10 (Day 2 leads, identified June 18 — outreach pending)
+- **CONTACTED**: 14 (10 emailed June 17 + 4 called June 19 via Vapi/Alex)
+- **CALLED (pending outcome)**: 4 (Cueto Law, Trembly Law, Douglas Elliman, One Sotheby's)
+- **NEW**: 6 (remaining Day 2 leads — calls pending)
 - **Responses**: 0
 - **Industries**: Restaurants 25%, Home Services 25%, Retail 15%, Real Estate 10%, Law Firms 10%, Salons 10%, Auto 5%
 
