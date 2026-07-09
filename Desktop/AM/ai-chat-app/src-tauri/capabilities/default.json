@@ -1,0 +1,21 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "enables the default permissions",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "core:event:default",
+    "core:window:default",
+    "updater:default",
+    "updater:allow-check",
+    "updater:allow-download-and-install",
+    "fs:default",
+    "fs:read-all",
+    "fs:write-all",
+    "shell:default",
+    "shell:allow-execute"
+  ]
+}

@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #00ff41;
+  --terminal-bg: #0a0f0a;
+  --terminal-fg: #00ff41;
+  --terminal-dim: #008f11;
+  --terminal-dark: #003b00;
+  --terminal-border: #005500;
+  --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", Menlo, Monaco, Consolas, monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-mono);
+  --font-mono: var(--font-mono);
+}
+
+html, body {
+  background: #000;
+  color: var(--terminal-fg);
+  font-family: var(--font-mono) !important;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  text-rendering: optimizeSpeed;
+  overflow: hidden;
+}
+
+/* ── Selection ── */
+::selection {
+  background: #00ff41;
+  color: #000;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #005500;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #008f11;
+}
+
+/* ── Terminal cursor blink ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  5% { opacity: 0.95; }
+  10% { opacity: 1; }
+  15% { opacity: 0.9; }
+  20% { opacity: 1; }
+  50% { opacity: 0.98; }
+  52% { opacity: 0.85; }
+  54% { opacity: 0.98; }
+  80% { opacity: 1; }
+  90% { opacity: 0.96; }
+}
+
+@keyframes scanlineMove {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ── CRT scanline overlay ── */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.35) 0px,
+      rgba(0, 0, 0, 0.35) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  mix-blend-mode: multiply;
+  animation: flicker 4s infinite;
+}
+
+.crt-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+/* ── CRT moving scanline ── */
+.crt-scanline {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  overflow: hidden;
+}
+.crt-scanline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 255, 65, 0.03);
+  animation: scanlineMove 8s linear infinite;
+}
+
+/* ── Terminal text glow ── */
+.terminal-glow {
+  text-shadow:
+    0 0 2px rgba(0, 255, 65, 0.4),
+    0 0 8px rgba(0, 255, 65, 0.15),
+    0 0 16px rgba(0, 255, 65, 0.05);
+}
+
+/* ── Phosphor burn-in effect for large text ── */
+.phosphor {
+  text-shadow:
+    0 0 4px rgba(0, 255, 65, 0.6),
+    0 0 12px rgba(0, 255, 65, 0.3),
+    0 0 24px rgba(0, 255, 65, 0.1);
+}
+
+/* ── Cursor ── */
+.cursor-block {
+  display: inline-block;
+  width: 10px;
+  height: 1.2em;
+  background: #00ff41;
+  animation: blink 1s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+
+/* ── Input reset ── */
+input, textarea {
+  font-family: var(--font-mono) !important;
+  border-radius: 0 !important;
+}
+
+/* ── No outline glows on focus ── */
+*:focus {
+  outline: none;
+}

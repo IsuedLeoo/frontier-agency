@@ -1,0 +1,45 @@
+name: Release A.M.
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Rust
+        uses: dtolnay/rust-action@stable
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build & Release Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ""
+        with:
+          tagName: ${{ github.ref_type == 'tag' && github.ref_name || 'app-v__VERSION__' }}
+          releaseName: "A.M. ${{ github.ref_type == 'tag' && github.ref_name || 'Continuous Build' }}"
+          releaseBody: |
+            Auto-generated release for A.M.
+            - Download the `.dmg` or `.app.tar.gz` below.
+            - The app will auto-update on next launch.
+          releaseDraft: false
+          prerelease: ${{ github.ref_type != 'tag' }}
+          updaterJsonKeepUniversal: true
+          includeUpdaterJson: true
