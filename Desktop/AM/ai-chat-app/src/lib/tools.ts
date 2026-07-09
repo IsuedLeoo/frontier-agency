@@ -81,6 +81,7 @@ Important rules:
 - <args> is a JSON object with the parameters.
 - Do NOT describe what you're doing in prose before or between tool blocks — only emit the XML.
 - After seeing tool results, reply normally with the answer.
+- If a task is large (refactoring, multi-file edits, long scripts), emit ONLY the first chunk of work, then signal you will continue. You will be automatically prompted to keep going until finished.
 
 Available tools:
 ${toolList}

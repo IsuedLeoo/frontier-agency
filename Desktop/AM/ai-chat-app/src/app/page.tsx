@@ -188,6 +188,11 @@ export default function Home() {
   const [updateInfo, setUpdateInfo] = useState<UpdateInfo | null>(null);
   const [updateInstalling, setUpdateInstalling] = useState(false);
 
+  /* -- autonomous mode -- */
+  const [autonomousMode, setAutonomousMode] = useState(false);
+  const [working, setWorking] = useState(false);
+  const autonomousAbortRef = useRef(false);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const modelSelectorRef = useRef<HTMLDivElement>(null);
@@ -299,9 +304,168 @@ export default function Home() {
     }
   };
 
+  /* ── Autonomous continuation prompt ── */
+  const AUTO_CONTINUE_PROMPT =
+    "You were just interrupted. Continue exactly where you left off. Do NOT summarize or restart. Pick up mid-thought or mid-task and keep going until the task is fully complete. If you were writing code, continue from the next line. If you were reasoning, continue the same reasoning chain.";
+
+  const runSingleTurn = async (
+    currentHistory: ChatMessage[]
+  ): Promise<{
+    text: string;
+    reasoning?: string;
+    error?: string;
+    history: ChatMessage[];
+  }> => {
+    if (!activeProvider || !activeModel) {
+      return { text: "", error: "No provider configured.", history: currentHistory };
+    }
+
+    abortRef.current = new AbortController();
+    setIsStreaming(true);
+    setStreamingText("");
+    setStreamingReasoning("");
+
+    const result = await sendChatMessage({
+      provider: activeProvider,
+      model: activeModel,
+      messages: currentHistory,
+      onStream: (chunk) => {
+        setStreamingText((prev) => prev + chunk);
+      },
+      onReasoning: (chunk) => {
+        setStreamingReasoning((prev) => prev + chunk);
+      },
+      signal: abortRef.current.signal,
+    });
+
+    setIsStreaming(false);
+
+    if (result.error) {
+      return { text: "", error: result.error, history: currentHistory };
+    }
+
+    const text = result.text || "";
+    const assistantHistoryMsg: ChatMessage = {
+      role: "assistant",
+      content: text,
+      timestamp: Date.now(),
+    };
+
+    /* ── Tool calling loop (unlimited iterations) ── */
+    let toolHistory = [...currentHistory, assistantHistoryMsg];
+    let currentText = text;
+    let currentReasoning = result.reasoning;
+
+    while (true) {
+      if (autonomousAbortRef.current) break;
+      const toolCalls = parseToolCalls(currentText);
+      if (toolCalls.length === 0) break;
+
+      // Persist assistant's tool-using turn
+      const toolAssistantMsg: Message = {
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content: currentText,
+        reasoning: currentReasoning,
+        timestamp: Date.now(),
+      };
+      setChats((prev) =>
+        prev.map((c) =>
+          c.id === activeChatId
+            ? {
+                ...c,
+                messages: [...c.messages, toolAssistantMsg],
+                updatedAt: Date.now(),
+              }
+            : c
+        )
+      );
+      if (currentReasoning) {
+        setShowReasoning((prev) => ({
+          ...prev,
+          [toolAssistantMsg.id]: true,
+        }));
+      }
+
+      // Execute tools
+      setIsLoading(true);
+      const toolResults = await executeToolCalls(toolCalls);
+
+      // Persist tool results as a user turn
+      const toolResultContent = formatToolResults(toolResults);
+      const toolResultMsg: Message = {
+        id: crypto.randomUUID(),
+        role: "user",
+        content: `[tool results]\n${toolResultContent}`,
+        timestamp: Date.now(),
+      };
+      toolHistory.push({
+        role: "user",
+        content: toolResultContent,
+        timestamp: Date.now(),
+      });
+      setChats((prev) =>
+        prev.map((c) =>
+          c.id === activeChatId
+            ? {
+                ...c,
+                messages: [...c.messages, toolResultMsg],
+                updatedAt: Date.now(),
+              }
+            : c
+        )
+      );
+
+      // Re-send with tool results
+      abortRef.current = new AbortController();
+      setIsStreaming(true);
+      setStreamingText("");
+      setStreamingReasoning("");
+
+      const nextResult = await sendChatMessage({
+        provider: activeProvider,
+        model: activeModel,
+        messages: toolHistory,
+        onStream: (chunk) => {
+          setStreamingText((prev) => prev + chunk);
+        },
+        onReasoning: (chunk) => {
+          setStreamingReasoning((prev) => prev + chunk);
+        },
+        signal: abortRef.current.signal,
+      });
+
+      setIsStreaming(false);
+
+      if (nextResult.error) {
+        return {
+          text: "",
+          error: nextResult.error,
+          history: toolHistory,
+        };
+      }
+
+      currentText = nextResult.text || "";
+      currentReasoning = nextResult.reasoning;
+      toolHistory.push({
+        role: "assistant",
+        content: currentText,
+        timestamp: Date.now(),
+      });
+    }
+
+    return {
+      text: currentText,
+      reasoning: currentReasoning,
+      history: toolHistory,
+    };
+  };
+
   const handleSubmit = async () => {
     if (!input.trim() || isLoading || !activeChatId) return;
     const text = input.trim();
+
+    autonomousAbortRef.current = false;
 
     const userMsg: Message = {
       id: crypto.randomUUID(),
@@ -346,7 +510,7 @@ export default function Home() {
       return;
     }
 
-    const history: ChatMessage[] = [
+    let history: ChatMessage[] = [
       {
         role: "system",
         content:
@@ -361,144 +525,92 @@ export default function Home() {
       { role: "user" as const, content: text, timestamp: Date.now() },
     ];
 
-    abortRef.current = new AbortController();
-    setIsStreaming(true);
-    setStreamingText("");
-    setStreamingReasoning("");
+    let turn = 0;
+    const MAX_AUTONOMOUS_TURNS = 20;
 
-    let result = await sendChatMessage({
-      provider: activeProvider,
-      model: activeModel,
-      messages: history,
-      onStream: (chunk) => {
-        setStreamingText((prev) => prev + chunk);
-      },
-      onReasoning: (chunk) => {
-        setStreamingReasoning((prev) => prev + chunk);
-      },
-      signal: abortRef.current.signal,
-    });
+    while (true) {
+      if (autonomousAbortRef.current) break;
 
-    setIsStreaming(false);
+      setWorking(turn > 0);
+      const result = await runSingleTurn(history);
 
-    /* ── Tool calling loop ── */
-    const MAX_TOOL_ITERATIONS = 3;
-    let toolIterations = 0;
-    let currentHistory = [...history];
+      if (result.error) {
+        setIsLoading(false);
+        setWorking(false);
+        const errMsg: Message = {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: `Error: ${result.error}`,
+          timestamp: Date.now(),
+        };
+        setChats((prev) =>
+          prev.map((c) =>
+            c.id === activeChatId
+              ? { ...c, messages: [...c.messages, errMsg], updatedAt: Date.now() }
+              : c
+          )
+        );
+        break;
+      }
 
-    while (toolIterations < MAX_TOOL_ITERATIONS) {
-      if (result.error) break;
-      const toolCalls = parseToolCalls(result.text || "");
-      if (toolCalls.length === 0) break;
-
-      // Persist assistant's tool-using turn
-      const toolAssistantMsg: Message = {
+      const finalText = result.text || "No response.";
+      const aiMsg: Message = {
         id: crypto.randomUUID(),
         role: "assistant",
-        content: result.text || "",
+        content: finalText,
         reasoning: result.reasoning,
         timestamp: Date.now(),
       };
-      currentHistory.push({
-        role: "assistant",
-        content: result.text || "",
-        timestamp: Date.now(),
-      });
+
       setChats((prev) =>
         prev.map((c) =>
           c.id === activeChatId
-            ? {
-                ...c,
-                messages: [...c.messages, toolAssistantMsg],
-                updatedAt: Date.now(),
-              }
+            ? { ...c, messages: [...c.messages, aiMsg], updatedAt: Date.now() }
             : c
         )
       );
       if (result.reasoning) {
-        setShowReasoning((prev) => ({
-          ...prev,
-          [toolAssistantMsg.id]: true,
-        }));
+        setShowReasoning((prev) => ({ ...prev, [aiMsg.id]: true }));
       }
 
-      // Execute tools
-      setIsLoading(true);
-      const toolResults = await executeToolCalls(toolCalls);
-
-      // Persist tool results as a user turn
-      const toolResultContent = formatToolResults(toolResults);
-      const toolResultMsg: Message = {
-        id: crypto.randomUUID(),
-        role: "user",
-        content: `[tool results]\n${toolResultContent}`,
-        timestamp: Date.now(),
-      };
-      currentHistory.push({
-        role: "user",
-        content: toolResultContent,
-        timestamp: Date.now(),
-      });
-      setChats((prev) =>
-        prev.map((c) =>
-          c.id === activeChatId
-            ? {
-                ...c,
-                messages: [...c.messages, toolResultMsg],
-                updatedAt: Date.now(),
-              }
-            : c
-        )
-      );
-
-      // Re-send with tool results
-      abortRef.current = new AbortController();
-      setIsStreaming(true);
       setStreamingText("");
       setStreamingReasoning("");
 
-      result = await sendChatMessage({
-        provider: activeProvider,
-        model: activeModel,
-        messages: currentHistory,
-        onStream: (chunk) => {
-          setStreamingText((prev) => prev + chunk);
-        },
-        onReasoning: (chunk) => {
-          setStreamingReasoning((prev) => prev + chunk);
-        },
-        signal: abortRef.current.signal,
-      });
+      // Stop if not in autonomous mode
+      if (!autonomousMode) break;
 
-      setIsStreaming(false);
-      toolIterations++;
+      // Stop if max turns reached
+      turn++;
+      if (turn >= MAX_AUTONOMOUS_TURNS) {
+        const capMsg: Message = {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content:
+            "_[autonomous cap reached — 20 turns max. Say \"continue\" to resume.]_",
+          timestamp: Date.now(),
+        };
+        setChats((prev) =>
+          prev.map((c) =>
+            c.id === activeChatId
+              ? { ...c, messages: [...c.messages, capMsg], updatedAt: Date.now() }
+              : c
+          )
+        );
+        break;
+      }
+
+      // Continue: feed a system-level continuation prompt back into history
+      history = [
+        ...result.history,
+        { role: "user" as const, content: AUTO_CONTINUE_PROMPT, timestamp: Date.now() },
+      ];
+
+      // Brief yield so UI can paint and user can abort
+      await new Promise((r) => setTimeout(r, 50));
     }
 
     setIsLoading(false);
-    const finalText = result.error
-      ? `Error: ${result.error}`
-      : result.text || "No response.";
-
-    const aiMsg: Message = {
-      id: crypto.randomUUID(),
-      role: "assistant",
-      content: finalText,
-      reasoning: result.reasoning,
-      timestamp: Date.now(),
-    };
-
-    setChats((prev) =>
-      prev.map((c) =>
-        c.id === activeChatId
-          ? { ...c, messages: [...c.messages, aiMsg], updatedAt: Date.now() }
-          : c
-      )
-    );
-    if (result.reasoning) {
-      setShowReasoning((prev) => ({ ...prev, [aiMsg.id]: true }));
-    }
-    setStreamingText("");
-    setStreamingReasoning("");
+    setWorking(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -1960,6 +2072,16 @@ export default function Home() {
                         am&gt;
                       </span>
                       <div className="flex-1 min-w-0 space-y-1">
+                        {working && (
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-[10px] px-1.5 py-0.5 animate-pulse" style={{ color: VIOLET, backgroundColor: "rgba(0,210,106,0.12)" }}>
+                              [WORKING]
+                            </span>
+                            <span className="text-[10px] font-mono" style={{ color: TEXT_TERTIARY }}>
+                              autonomous continuation active
+                            </span>
+                          </div>
+                        )}
                         {streamingReasoning && (
                           <div
                             className="border overflow-hidden"
@@ -2103,12 +2225,27 @@ export default function Home() {
                       </button>
                       {showModelSelector && <ModelSelectorDropdown />}
                     </div>
+                    <button
+                      onClick={() => setAutonomousMode((v) => !v)}
+                      title={autonomousMode ? "Autonomous mode ON — A.M. will continue working automatically" : "Autonomous mode OFF"}
+                      className="flex items-center gap-1 px-2 py-1 text-[11px] transition-colors hover:bg-white/5 font-mono"
+                      style={{ color: autonomousMode ? VIOLET : TEXT_TERTIARY }}
+                    >
+                      <span>{autonomousMode ? "[loop]" : "[—]"}</span>
+                      <span>{autonomousMode ? "auto" : "loop"}</span>
+                    </button>
+                    {autonomousMode && (
+                      <span className="font-mono text-[10px] px-1.5 py-0.5" style={{ color: VIOLET_LIGHT, backgroundColor: "rgba(0,210,106,0.12)" }}>
+                        CONT
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center gap-1">
                     {isLoading && (
                       <button
                         onClick={() => {
                           abortRef.current?.abort();
+                          autonomousAbortRef.current = true;
                         }}
                         className="p-1.5 hover:bg-white/5 transition-colors font-mono"
                         title="Stop"
